@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Emerald Agencies - Accounts</title>
+<style>:root{--bg:#f4f6f5;--panel:#fff;--ink:#16221f;--mut:#60706b;--line:#dfe6e3;--acc:#0b6b5c;--acc2:#0f8f7a;--accbg:#e4f3ef;--warn:#b45309;--warnbg:#fef3c7;--bad:#b42318;--badbg:#fde8e6;--ok:#0a7a4b;--okbg:#dff5e9;--hd:#0b6b5c;--hdink:#fff;--row:#f8faf9;--sh:0 1px 2px rgba(16,34,31,.06),0 4px 14px rgba(16,34,31,.05);
+--c1:#0b6b5c;--c2:#e08a1e;--c3:#3b6fb6;--c4:#b5446e;--c5:#7a8f1a;--c6:#6b5ca5}
+:root[data-theme=dark]{--bg:#0f1715;--panel:#17211e;--ink:#e6efec;--mut:#92a59f;--line:#26342f;--acc:#38c2a8;--acc2:#4fd1b8;--accbg:#173a33;--warn:#f0b24c;--warnbg:#3a2d12;--bad:#ff8a7d;--badbg:#3d1c19;--ok:#58d49a;--okbg:#12362a;--hd:#1d3b34;--hdink:#e6efec;--row:#1a2623;--sh:none;--c1:#38c2a8;--c2:#f0a43c;--c3:#6fa0e8;--c4:#e57aa0;--c5:#b4cc4a;--c6:#a597e0}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+#app{display:grid;grid-template-columns:220px 1fr;grid-template-rows:56px 1fr;height:100vh}
+#top{grid-column:1/3;display:flex;align-items:center;gap:14px;padding:0 18px;background:var(--panel);border-bottom:1px solid var(--line)}
+#top .brand{font-weight:700;font-size:17px;letter-spacing:.3px;color:var(--acc)}
+#top .brand small{display:block;font-weight:500;font-size:10.5px;color:var(--mut);letter-spacing:.8px;margin-top:-2px}
+#top .sp{flex:1}
+#top label{font-size:12px;color:var(--mut);display:flex;align-items:center;gap:6px}
+#menu{display:none}
+#side{background:var(--panel);border-right:1px solid var(--line);padding:12px 10px;overflow:auto}
+#side a{display:block;padding:9px 12px;border-radius:8px;color:var(--ink);text-decoration:none;cursor:pointer;margin-bottom:2px;font-weight:500}
+#side a:hover{background:var(--accbg)}#side a.on{background:var(--acc);color:#fff}
+:root[data-theme=dark] #side a.on{color:#08201b}
+#side .grp{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--mut);padding:12px 12px 4px}
+#main{overflow:auto;padding:18px 22px 60px}
+h1{font-size:20px;margin:0 0 4px}h2{font-size:15px;margin:0 0 10px}
+.sub{color:var(--mut);margin-bottom:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh);padding:14px 16px;margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--sh)}
+.kpi .l{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.kpi .v{font-size:22px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:12px;color:var(--mut)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:1000px){.grid2{grid-template-columns:1fr}}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:12px}
+.bar .f{display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:var(--mut)}
+.bar .f.chk{flex-direction:row;align-items:center;gap:6px;padding-bottom:7px}
+input[type=text],input[type=date],input[type=number],select,textarea,input:not([type]){background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 9px;color:var(--ink);min-width:0}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--acc2);outline-offset:-1px}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600}
+:root[data-theme=dark] .btn{color:#08201b}
+.btn:hover{filter:brightness(1.08)}.btn.sec{background:var(--accbg);color:var(--acc)}
+.btn.bad{background:var(--bad);color:#fff}.btn.sm{padding:4px 9px;font-size:12px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.tabs a{padding:8px 14px;cursor:pointer;border-bottom:2px solid transparent;color:var(--mut);font-weight:600}
+.tabs a.on{color:var(--acc);border-color:var(--acc)}
+.tw{overflow:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);max-height:calc(100vh - 290px)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th{position:sticky;top:0;background:var(--hd);color:var(--hdink);text-align:left;padding:8px 8px;font-size:12px;white-space:nowrap;cursor:pointer;user-select:none;z-index:1}
+th.n,td.n{text-align:right}
+td{padding:6px 8px;border-top:1px solid var(--line);white-space:nowrap}
+td.w{white-space:normal;min-width:160px}
+tbody tr:nth-child(even){background:var(--row)}tbody tr:hover{background:var(--accbg)}
+tfoot td{font-weight:700;background:var(--accbg);position:sticky;bottom:0;border-top:2px solid var(--acc)}
+a.lk{color:var(--acc);cursor:pointer;text-decoration:none;font-weight:600}a.lk:hover{text-decoration:underline}
+.neg{color:var(--bad)}.pos{color:var(--ok)}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11px;font-weight:600}
+.pill.ok{background:var(--okbg);color:var(--ok)}.pill.warn{background:var(--warnbg);color:var(--warn)}.pill.bad{background:var(--badbg);color:var(--bad)}.pill.mut{background:var(--accbg);color:var(--mut)}
+.pager{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:8px;color:var(--mut);font-size:12.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{background:var(--accbg);border-radius:8px;padding:6px 11px;font-size:12.5px}.chip b{font-variant-numeric:tabular-nums}
+#mask{position:fixed;inset:0;background:rgba(8,20,17,.55);display:none;align-items:flex-start;justify-content:center;padding:5vh 12px;overflow:auto;z-index:50}
+#mask.on{display:flex}
+.modal{background:var(--panel);border-radius:14px;width:min(560px,100%);box-shadow:0 20px 60px rgba(0,0,0,.35);padding:18px 20px}
+.modal.wide{width:min(900px,100%)}
+.modal h2{font-size:17px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;margin:10px 0}
+.fg label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--mut)}.fg .full{grid-column:1/3}
+.acts{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:6px;z-index:99;align-items:center}
+.t{background:#16221f;color:#fff;padding:9px 16px;border-radius:9px;box-shadow:0 6px 20px rgba(0,0,0,.3);font-size:13px}
+.t.err{background:#b42318}
+.ac{position:absolute;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);max-height:260px;overflow:auto;z-index:80;min-width:260px}
+.ac div{padding:6px 10px;cursor:pointer}.ac div.on,.ac div:hover{background:var(--accbg)}
+.dz{border:2px dashed var(--line);border-radius:14px;padding:26px 18px;text-align:center;color:var(--mut);cursor:pointer;transition:.15s;position:relative}
+.dz:hover,.dz.on{border-color:var(--acc);background:var(--accbg)}.dz.on{transform:scale(1.01)}
+.dz .ic{font-size:30px;line-height:1;color:var(--acc)}.dz .t1{font-weight:600;color:var(--ink);margin:6px 0 2px}
+.dz input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.imp .card{display:flex;flex-direction:column}.imp .card h2{display:flex;align-items:center;gap:8px}
+.imp .card h2:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--acc)}
+.card h2{letter-spacing:.2px}.nav-new{font-size:9px;background:var(--c2);color:#fff;border-radius:99px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+#side a{transition:.12s}#side a:hover{transform:translateX(2px)}
+.kpi{transition:.15s}.kpi:hover{transform:translateY(-2px)}
+.btn{transition:.12s}.btn:active{transform:scale(.97)}
+#top{box-shadow:var(--sh)}th{letter-spacing:.3px}
+.imp{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.mut{color:var(--mut)}.small{font-size:12px}.right{text-align:right}
+.svgc text{fill:var(--mut);font-size:11px}.svgc .lbl{fill:var(--ink)}
+.hbar{display:grid;grid-template-columns:minmax(120px,210px) 1fr 100px;gap:8px;align-items:center;margin:5px 0;font-size:12.5px}
+.hbar .tr{background:var(--accbg);border-radius:5px;height:14px}.hbar .fl{background:var(--c1);height:14px;border-radius:5px}
+.hbar span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+@media(max-width:820px){#app{grid-template-columns:1fr}#side{position:fixed;left:0;top:56px;bottom:0;width:230px;transform:translateX(-100%);transition:.2s;z-index:40}#side.on{transform:none}#menu{display:block}#top{grid-column:1}#main{padding:12px}.fg{grid-template-columns:1fr}.fg .full{grid-column:1}}
+#sync{font-size:12px;cursor:pointer;padding:4px 10px;border-radius:99px;background:var(--accbg);color:var(--acc);white-space:nowrap;font-weight:600}#sync.warn{background:var(--warnbg);color:var(--warn)}#sync.err{background:var(--badbg);color:var(--bad)}
+.spin{display:inline-block;width:34px;height:34px;border:4px solid var(--line);border-top-color:var(--acc);border-radius:50%;animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.pre{white-space:pre-wrap;background:var(--accbg);border-radius:8px;padding:10px 12px;font-size:12.5px}
+
+/* ===== v3: pill tabs + animations ===== */
+.tabs{display:inline-flex;flex-wrap:wrap;gap:4px;background:var(--accbg);padding:4px;border-radius:12px;border:0;margin-bottom:14px}
+.tabs a{border:0;border-radius:9px;padding:7px 16px;color:var(--mut);transition:background .2s,color .2s,box-shadow .2s}
+.tabs a:hover{color:var(--acc)}.tabs a.on{background:var(--panel);color:var(--acc);box-shadow:0 2px 8px rgba(11,107,92,.18)}
+@keyframes fup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes growx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pop{from{opacity:0;transform:translateY(-16px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes tin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes dn{from{stroke-dasharray:0 339.3}}
+@keyframes rowin{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+#view>*{animation:fup .45s cubic-bezier(.2,.7,.2,1) both}
+#view>*:nth-child(2){animation-delay:.05s}#view>*:nth-child(3){animation-delay:.1s}#view>*:nth-child(4){animation-delay:.15s}#view>*:nth-child(5){animation-delay:.2s}#view>*:nth-child(n+6){animation-delay:.25s}
+.kpi{animation:fup .5s cubic-bezier(.2,.7,.2,1) both}.kpi:nth-child(2){animation-delay:.06s}.kpi:nth-child(3){animation-delay:.12s}.kpi:nth-child(4){animation-delay:.18s}.kpi:nth-child(5){animation-delay:.24s}.kpi:nth-child(n+6){animation-delay:.3s}
+.kpi{border-top:3px solid var(--acc)}.kpi:nth-child(2n){border-top-color:var(--c2)}.kpi:nth-child(3n){border-top-color:var(--c3)}
+.svgc rect{transform-box:fill-box;transform-origin:bottom;animation:grow .8s cubic-bezier(.2,.7,.2,1) both}
+.svgc g rect:nth-child(2n){animation-delay:.08s}
+.hbar .fl{transform-origin:left;animation:growx .9s cubic-bezier(.2,.7,.2,1) both}
+.hbar:nth-child(2) .fl{animation-delay:.05s}.hbar:nth-child(3) .fl{animation-delay:.1s}.hbar:nth-child(4) .fl{animation-delay:.15s}.hbar:nth-child(n+5) .fl{animation-delay:.2s}
+tbody tr:nth-child(-n+25){animation:rowin .35s ease both}
+tbody tr:nth-child(2){animation-delay:.02s}tbody tr:nth-child(3){animation-delay:.04s}tbody tr:nth-child(4){animation-delay:.06s}tbody tr:nth-child(5){animation-delay:.08s}tbody tr:nth-child(n+6){animation-delay:.1s}
+.modal{animation:pop .28s cubic-bezier(.2,.8,.3,1) both}
+.t{animation:tin .3s ease both}
+.dn{display:flex;align-items:center;gap:22px;flex-wrap:wrap}.dn svg{width:170px;height:170px;flex:none}
+.dn circle.sg{fill:none;stroke-width:22;animation:dn 1s cubic-bezier(.2,.7,.2,1) both;transition:stroke-width .2s}.dn circle.sg:hover{stroke-width:27}
+.dn .ctr{fill:var(--ink);font-weight:700;font-size:15px;text-anchor:middle}.dn .ctl{fill:var(--mut);font-size:9px;text-anchor:middle;text-transform:uppercase;letter-spacing:.6px}
+.dn .lg{flex:1;min-width:150px;font-size:12.5px}.dn .lg div{display:flex;align-items:center;gap:8px;margin:6px 0}.dn .lg i{width:11px;height:11px;border-radius:3px;flex:none}.dn .lg b{margin-left:auto;font-variant-numeric:tabular-nums}
+.btn.sec:hover{box-shadow:0 2px 8px rgba(11,107,92,.2)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+#side .gh{display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;margin-top:6px;border-radius:8px;padding:8px 12px}
+#side .gh:hover{background:var(--accbg);color:var(--acc)}#side .gh span{flex:1}
+#side .gh em{font-style:normal;font-size:10px;background:var(--accbg);color:var(--acc);border-radius:99px;padding:0 7px;font-weight:700}
+#side .gh i{font-style:normal;transition:transform .2s}#side .gh.off i{transform:rotate(-90deg)}
+#side .gb{overflow:hidden;max-height:400px;transition:max-height .25s ease,opacity .2s;padding-left:6px;border-left:2px solid var(--line);margin-left:14px}
+#side .gb.off{max-height:0;opacity:0}#side .gb a{font-size:13px;padding:7px 10px}
+
+/* ===== v4: UI refresh ===== */
+body{background:radial-gradient(1200px 500px at 85% -10%,var(--accbg),transparent 60%),var(--bg);letter-spacing:.1px}
+#top{background:color-mix(in srgb,var(--panel) 85%,transparent);backdrop-filter:blur(10px);position:relative;z-index:30;border-bottom:1px solid var(--line)}
+#top .brand{display:flex;flex-direction:column;line-height:1.15}
+#top .brand small{margin-top:1px}
+#side{background:linear-gradient(185deg,#06362f 0%,#0b6b5c 100%);border-right:0;padding:14px 10px;scrollbar-width:thin}
+#side a{color:#d5ece6;font-weight:500;border-radius:10px;position:relative}
+#side a:hover{background:rgba(255,255,255,.1);color:#fff}
+#side a.on{background:#fff;color:#0b6b5c;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.22)}
+:root[data-theme=dark] #side a.on{background:#fff;color:#0b6b5c}
+#side .grp,#side .gh{color:#9fd3c7}#side .gh:hover{background:rgba(255,255,255,.08);color:#fff}
+#side .gh em{background:rgba(255,255,255,.14);color:#e6fff8}
+#side .gb{border-left-color:rgba(255,255,255,.18)}
+#main{padding:22px 28px 70px}
+h1{font-size:23px;font-weight:800;letter-spacing:-.3px;padding-left:12px;border-left:4px solid var(--acc);line-height:1.15;margin-bottom:6px}
+.sub{max-width:900px}
+.card{border-radius:16px;transition:box-shadow .2s,transform .2s}.card:hover{box-shadow:0 8px 28px rgba(16,34,31,.1)}
+.kpi{border-radius:16px;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--panel),var(--accbg))}
+.kpi:after{content:"";position:absolute;right:-18px;top:-18px;width:70px;height:70px;border-radius:50%;background:var(--acc);opacity:.08}
+.kpi .v{font-size:25px;font-weight:800;letter-spacing:-.4px}
+.btn{background:linear-gradient(135deg,var(--acc2),var(--acc));border-radius:10px;box-shadow:0 2px 6px rgba(11,107,92,.25)}
+.btn.sec{background:var(--accbg);box-shadow:none;border:1px solid transparent}.btn.sec:hover{border-color:var(--acc)}
+.btn.bad{background:var(--bad)}
+input[type=text],input[type=date],input[type=number],select,textarea,input:not([type]){border-radius:10px;padding:8px 10px;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--acc2);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc2) 25%,transparent)}
+.tw{border-radius:14px;box-shadow:var(--sh)}
+th{background:linear-gradient(180deg,var(--hd),color-mix(in srgb,var(--hd) 85%,#000));font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;padding:10px 9px}
+td{padding:8px 9px}tbody tr{transition:background .12s}
+.chip{border-radius:99px;padding:6px 14px;border:1px solid var(--line);background:var(--panel);box-shadow:var(--sh)}
+.pill{padding:2px 10px}
+.pager{padding:6px 2px}
+.dz{background:repeating-linear-gradient(45deg,transparent 0 12px,color-mix(in srgb,var(--accbg) 50%,transparent) 12px 24px)}
+#mask{backdrop-filter:blur(4px)}.modal{border-radius:18px}
+.t{border-left:4px solid var(--acc2);border-radius:12px}.t.err{border-left-color:#ffb4ab}
+#sync{box-shadow:var(--sh)}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--mut) 40%,transparent);border-radius:99px;border:2px solid transparent;background-clip:content-box}::-webkit-scrollbar-thumb:hover{background:var(--mut);background-clip:content-box;border:2px solid transparent}
+@media(max-width:820px){#main{padding:14px}#top .brand small{display:none}h1{font-size:19px}}
+.spk{width:100%;height:28px;margin-top:6px;display:block}.spk polyline{stroke-dasharray:300;stroke-dashoffset:300;animation:dash 1.2s .2s ease forwards}@keyframes dash{to{stroke-dashoffset:0}}
+.svgc rect[data-act],.dn circle[data-act]{cursor:pointer}.svgc rect[data-act]:hover{filter:brightness(1.15)}
+.card.due{display:flex;align-items:center;gap:12px;background:var(--warnbg);border-color:var(--warn);color:var(--warn)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.cal .ch{text-align:center;font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;padding:2px}
+.cd{min-height:78px;border:1px solid var(--line);border-radius:10px;padding:6px 8px;position:relative;display:flex;flex-direction:column;gap:1px;background:var(--panel);transition:transform .15s,box-shadow .15s}
+.cd.e{border:0;background:none}.cd b{font-size:12px;color:var(--mut)}.cd span{font-weight:800;font-size:14px;font-variant-numeric:tabular-nums}.cd small{font-size:10.5px;color:var(--mut)}
+.cd.has{cursor:pointer;background:color-mix(in srgb,var(--c1) calc(var(--i)*30%),var(--panel))}.cd.has:hover{transform:translateY(-2px);box-shadow:var(--sh)}
+.cd.has.late{background:color-mix(in srgb,var(--bad) calc(var(--i)*30%),var(--panel))}.cd.has.late span{color:var(--bad)}
+.cd.today{border:2px solid var(--c2)}.cd.sel{outline:3px solid var(--acc);outline-offset:-1px}
+@media(max-width:820px){.cd{min-height:58px;padding:4px}.cd span{font-size:11px}.cd small{display:none}}
+#lock{position:fixed;inset:0;z-index:300;display:flex;background:#052e28;overflow:hidden}#lock.off{display:none}
+#lock .bl{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:flt 14s ease-in-out infinite alternate}
+#lock .b1{width:420px;height:420px;background:#0f8f7a;left:-100px;top:-80px}#lock .b2{width:360px;height:360px;background:#e08a1e;left:30%;bottom:-140px;opacity:.28;animation-delay:-5s}#lock .b3{width:300px;height:300px;background:#3b6fb6;left:15%;top:40%;opacity:.25;animation-delay:-9s}
+@keyframes flt{to{transform:translate(60px,40px) scale(1.15)}}
+.lbrand{flex:1.1;position:relative;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 7vw}
+.lmark{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;font-size:30px;font-weight:800;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);margin-bottom:26px;animation:pop .6s both}
+.lbrand h1{border:0;padding:0;font-size:clamp(30px,4.2vw,52px);letter-spacing:2px;line-height:1.05;margin:0 0 12px;font-weight:800;animation:fup .7s .1s both}
+.lbrand p{margin:0;color:#a9d9cf;letter-spacing:.5px;animation:fup .7s .2s both}
+.lclock{margin-top:44px;animation:fup .7s .3s both}.lclock b{display:block;font-size:42px;font-weight:300;letter-spacing:2px;font-variant-numeric:tabular-nums}.lclock span{color:#a9d9cf;font-size:13px}
+.lside{flex:.9;position:relative;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(255,255,255,.07);backdrop-filter:blur(18px);border-left:1px solid rgba(255,255,255,.12)}
+.lbox{width:min(340px,100%);background:var(--panel);border-radius:24px;padding:34px 30px 24px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:pop .5s .15s both}
+.lic{width:62px;height:62px;border-radius:50%;margin:-62px auto 14px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--acc2),#064b40);box-shadow:0 10px 26px rgba(11,107,92,.5);border:4px solid var(--panel)}
+.lbox h2{font-size:21px;margin:0 0 4px;font-weight:800}.lsub{font-size:13px;color:var(--mut);min-height:18px}.lsub.bad{color:var(--bad);font-weight:600}
+#lpin{width:100%;margin:20px 0 12px;text-align:center;font-size:22px;letter-spacing:10px;padding:13px;border-radius:14px;border:2px solid var(--line);background:var(--bg)}
+#lpin::placeholder{letter-spacing:6px;color:var(--mut);opacity:.5}
+#lgo{width:100%;padding:13px;border-radius:14px;font-size:15px}#lgo span{display:inline-block;transition:transform .2s}#lgo:hover span{transform:translateX(4px)}
+.lfoot{margin-top:16px;font-size:11px;color:var(--mut)}
+@keyframes shk{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+@media(max-width:760px){.lbrand{display:none}.lside{border:0;background:none}.lbox{margin-top:40px}}
+
+/* ===== v5: graphics ===== */
+.hero{position:relative;overflow:hidden;border-radius:20px;padding:22px 26px 46px;margin-bottom:16px;color:#fff;background:linear-gradient(120deg,#064b40,#0b6b5c,#0f8f7a,#3b6fb6);background-size:240% 240%;animation:hg 12s ease infinite,fup .5s both;box-shadow:0 10px 30px rgba(11,107,92,.3)}
+@keyframes hg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.hero .ht{position:relative;z-index:2}.hero small{opacity:.8;letter-spacing:1px;text-transform:uppercase;font-size:11px}.hero h2{font-size:24px;font-weight:800;margin:2px 0 12px;letter-spacing:.5px}
+.hero .hs{display:flex;flex-wrap:wrap;gap:8px}.hero .hs span{background:rgba(255,255,255,.16);backdrop-filter:blur(6px);padding:5px 12px;border-radius:99px;font-size:12.5px;border:1px solid rgba(255,255,255,.2)}.hero .hs b{font-size:14px}
+.hero .hw{position:absolute;left:0;bottom:0;width:200%;height:54px;z-index:1}.hw .w1{fill:rgba(255,255,255,.13);animation:wv 9s linear infinite}.hw .w2{fill:rgba(255,255,255,.1);animation:wv 6s linear infinite reverse}
+@keyframes wv{to{transform:translateX(-50%)}}
+.hero .fb{position:absolute;border-radius:50%;background:rgba(255,255,255,.12);animation:fl 7s ease-in-out infinite}
+.fb.f1{width:90px;height:90px;right:6%;top:-30px}.fb.f2{width:46px;height:46px;right:22%;top:40px;animation-delay:-2s}.fb.f3{width:30px;height:30px;right:12%;bottom:30px;animation-delay:-4s}.fb.f4{width:120px;height:120px;right:-30px;bottom:-50px;animation-delay:-1s}
+@keyframes fl{50%{transform:translateY(-14px) translateX(8px)}}
+.gauges .gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.rg{display:flex;align-items:center;gap:14px}.rg svg{width:92px;height:92px;flex:none}.rg b{display:block;font-size:13.5px}.rg span{color:var(--mut);font-size:12px}
+.rr{animation:rg 1.3s cubic-bezier(.2,.7,.2,1) both}@keyframes rg{from{stroke-dasharray:0 226.2}}
+.gv{font-size:18px;font-weight:800;fill:var(--ink)}
+#side a u{text-decoration:none;display:inline-block;width:24px;font-size:14px;transition:transform .25s}#side a:hover u{transform:scale(1.3) rotate(-8deg)}#side a.on u{animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-2px) scale(1.12)}}
+.emp{animation:fl 4s ease-in-out infinite}.ec{transform-origin:88px 28px;animation:ec 2.4s ease-in-out infinite}@keyframes ec{50%{transform:scale(1.15)}}
+#prog{position:fixed;left:0;top:0;height:3px;width:100%;z-index:400;background:linear-gradient(90deg,var(--c2),var(--acc2));transform:scaleX(0);transform-origin:left;opacity:0;pointer-events:none}
+#prog.go{animation:pr .8s ease-out}@keyframes pr{0%{transform:scaleX(0);opacity:1}70%{transform:scaleX(.9);opacity:1}100%{transform:scaleX(1);opacity:0}}
+.btn{position:relative;overflow:hidden}.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.45);transform:scale(0);animation:rp .6s ease-out;pointer-events:none}.btn.sec .rip{background:rgba(11,107,92,.25)}
+@keyframes rp{to{transform:scale(2.6);opacity:0}}
+@media print{#side,#top,.bar,.pager,.acts{display:none}#app{display:block}}
+</style></head>
+<body>
+<div id="app">
+<header id="top"><button class="btn sec sm" id="menu" data-act="menu">☰</button><div class="brand">EMERALD AGENCIES<small>OUTSTANDING &amp; COLLECTION ACCOUNTS</small></div><div class="sp"></div>
+<label>As on <input type="date" id="asOn"></label><span id="sync" data-act="syncclick" style="display:none"></span><button class="btn sec sm" data-act="reload" title="Refresh data">↻</button><button class="btn sec sm" id="lockBtn" title="Lock (PIN)">🔒</button><button class="btn sec sm" id="themeBtn" data-act="theme" title="Toggle theme">☾</button></header>
+<nav id="side"></nav>
+<main id="main"><div id="view"></div></main>
+</div>
+<div id="prog"></div><div id="mask"></div><div id="toast"></div>
+<div id="lock"><i class="bl b1"></i><i class="bl b2"></i><i class="bl b3"></i>
+<div class="lbrand"><h1>EMERALD<br>AGENCIES</h1><p>Outstanding &amp; Collection Accounts</p><div class="lclock"><b id="lclock">--:--</b><span id="ldate"></span></div></div>
+<div class="lside"><div class="lbox"><div class="lic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><circle cx="12" cy="16" r="1.2" fill="currentColor"/></svg></div><h2>Welcome back</h2><div class="lsub" id="lmsg">Enter your PIN to continue</div>
+<input type="password" id="lpin" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="••••">
+<button type="button" class="btn" id="lgo">Unlock <span>→</span></button><div class="lfoot">Protected workspace · auto-locks after 10 min idle</div></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+<script>'use strict';
+/* ===== helpers ===== */
+const TYPES=['CASH','NEFT','UPI','CHQ'];
+const EPS=0.005;
+const r2=x=>Math.round((x+(x>=0?1e-9:-1e-9))*100)/100;
+const clean=s=>String(s==null?'':s).replace(/\s+/g,' ').trim();
+const nk=s=>clean(s).toUpperCase();
+const lk=s=>nk(s).replace(/[^A-Z0-9]/g,'');
+const ik=s=>String(s==null?'':s).replace(/\s+/g,'').toUpperCase();
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nf=new Intl.NumberFormat('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmt=n=>(n==null||n===''||isNaN(n))?'':nf.format(r2(n));
+const fmt0=n=>new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.round(n));
+const pad=n=>String(n).padStart(2,'0');
+const todayISO=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const disp=s=>s?s.slice(8,10)+'-'+s.slice(5,7)+'-'+s.slice(0,4):'';
+const utc=s=>Date.UTC(+s.slice(0,4),+s.slice(5,7)-1,+s.slice(8,10));
+const dayDiff=(a,b)=>Math.round((utc(b)-utc(a))/864e5);
+const addDays=(s,n)=>{const d=new Date(utc(s)+n*864e5);return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate())};
+const MON=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+function toISO(v){
+  if(v==null||v==='')return null;
+  if(v instanceof Date){return isNaN(v)?null:v.getFullYear()+'-'+pad(v.getMonth()+1)+'-'+pad(v.getDate())}
+  if(typeof v==='number'){if(v<20000||v>80000)return null;const d=new Date(Math.round((v-25569)*864e5));return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate())}
+  const s=String(v).trim();let m;
+  if(m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))return m[1]+'-'+pad(+m[2])+'-'+pad(+m[3]);
+  if(m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2,4})$/)){let y=+m[3];if(y<100)y+=2000;return y+'-'+pad(+m[2])+'-'+pad(+m[1])}
+  if(m=s.match(/^(\d{1,2})[-\/ ]([A-Za-z]{3})[a-z]*[-\/ ,]+(\d{2,4})$/)){const mi=MON.indexOf(m[2].toUpperCase());if(mi<0)return null;let y=+m[3];if(y<100)y+=2000;return y+'-'+pad(mi+1)+'-'+pad(+m[1])}
+  return null;
+}
+function num(v){if(v==null||v==='')return null;if(typeof v==='number')return isNaN(v)?null:v;const n=parseFloat(String(v).replace(/[,\s₹]/g,''));return isNaN(n)?null:n}
+const serial=s=>s?utc(s)/864e5+25569:null;
+
+/* ===== database ===== */
+const DEF_SETTINGS=()=>({openDate:'2026-03-31',fyStart:'2026-04-01',fyEnd:'2027-03-31',creditDays:30,buckets:[30,60,90,120,180],pendingChq:true,theme:'light',fyLabel:'FY 26-27',openLabel:'FY25-26'});
+const newDB=()=>({ver:1,company:'EMERALD AGENCIES',settings:DEF_SETTINGS(),parties:{},alias:{},opening:{},sales:[],coll:[],cancelled:[],log:[],seq:1,rev:0});
+let DB=newDB();
+let _loose=null,_pb=null;
+const dirtyParties=()=>{_loose=null;_pb=null};
+function looseIdx(){if(_loose)return _loose;_loose={};for(const k in DB.parties){const l=lk(DB.parties[k].name);(_loose[l]=_loose[l]||[]).push(k)}return _loose}
+function findParty(name){
+  const k=nk(name);if(!k)return null;
+  if(DB.alias[k]&&DB.parties[DB.alias[k]])return DB.alias[k];
+  if(DB.parties[k])return k;
+  const c=looseIdx()[lk(name)];if(c&&c.length===1)return c[0];
+  return null;
+}
+function ensureParty(name){let k=findParty(name);if(k)return k;k=nk(name);let kk=k,i=2;while(DB.parties[kk])kk=k+'#'+i++;DB.parties[kk]={name:clean(name)};dirtyParties();return kk}
+const pname=k=>DB.parties[k]?DB.parties[k].name:k;
+const bigrams=s=>{const a=new Set();for(let i=0;i<s.length-1;i++)a.add(s.substr(i,2));return a};
+const dice=(a,b)=>{let n=0;a.forEach(x=>{if(b.has(x))n++});return 2*n/((a.size+b.size)||1)};
+function pbig(){if(_pb)return _pb;_pb={};for(const k in DB.parties)_pb[k]=bigrams(lk(DB.parties[k].name));return _pb}
+function suggest(name,n=3,exclude){
+  const A=bigrams(lk(name)),PB=pbig(),out=[];
+  for(const k in PB){if(k===exclude)continue;const s=dice(A,PB[k]);if(s>=0.62)out.push([k,s])}
+  out.sort((a,b)=>b[1]-a[1]);return out.slice(0,n);
+}
+const bump=()=>{DB.rev++;_cache={};scheduleSave()};
+
+/* ===== data layer (backend: Apps Script Code.gs) ===== */
+const WEB_APP_URL='https://script.google.com/macros/s/AKfycbwUeb2Je2HE9j1UI-iYUTwVktBg90Wq5bbvfjbz6EU9rfiv6t0j18tOK0rM-_HigCW9KQ/exec';   // <- Apps Script Web app URL (Deploy > Web app)
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const HAS_GAS=typeof google!=='undefined'&&google.script&&google.script.run;
+function parseResp(t){try{return JSON.parse(t)}catch(e){throw new Error('Invalid response from server. Check that the web app is deployed with access "Anyone" and WEB_APP_URL is the latest /exec URL.')}}
+function gasCall(body){return new Promise((res,rej)=>google.script.run.withSuccessHandler(t=>{try{res(JSON.parse(t))}catch(e){rej(new Error('Invalid response from server'))}}).withFailureHandler(e=>rej(new Error(e&&e.message||String(e)))).api(JSON.stringify(body)))}
+async function apiGet(action){
+  if(HAS_GAS)return gasCall({action});
+  const r=await fetch(WEB_APP_URL+(WEB_APP_URL.includes('?')?'&':'?')+'action='+action+'&t='+Date.now());if(!r.ok)throw new Error('HTTP '+r.status);return parseResp(await r.text())}
+async function apiPost(body){
+  if(HAS_GAS)return gasCall(body);
+  const r=await fetch(WEB_APP_URL,{method:'POST',body:JSON.stringify(body)});if(!r.ok)throw new Error('HTTP '+r.status);return parseResp(await r.text())}
+let REV=null,LAST={},BAD={sales:[],coll:[],opening:[]},SYNC_READY=false,_saving=false,_st=null,_state='idle',_msg='';
+/* what is written to each sheet tab */
+const SEC={
+  settings(){const S=DB.settings;return [['company',DB.company],['openDate',S.openDate],['fyStart',S.fyStart],['fyEnd',S.fyEnd],['creditDays',S.creditDays],['buckets',S.buckets.join(',')],['pendingChq',S.pendingChq?'TRUE':'FALSE'],['fyLabel',S.fyLabel],['openLabel',S.openLabel]]},
+  opening(){return Object.keys(DB.opening).filter(k=>DB.parties[k]&&DB.opening[k]).map(k=>[pname(k),DB.opening[k]])},
+  parties(){const r=Object.keys(DB.parties).map(k=>[pname(k),'']);for(const a in DB.alias){const t=DB.alias[a];if(DB.parties[t])r.push([a,pname(t)])}return r},
+  sales(){const r=DB.sales.map(s=>[s.date,pname(s.k),s.inv,s.value]);DB.cancelled.forEach(c=>r.push([c.date||'','(cancelled)',c.inv,'']));
+    return r.map((x,i)=>[x,i]).sort((p,q)=>(p[0][0]||'')<(q[0][0]||'')?-1:(p[0][0]||'')>(q[0][0]||'')?1:p[1]-q[1]).map(x=>x[0])},
+  coll(){return DB.coll.map(c=>{const t=c.type,v=c.value;return [c.date,t,pname(c.k),t==='NEFT'?v:'',t==='CASH'?v:'',t==='UPI'?v:'',t==='UPI'?c.refNo||'':'',t==='CHQ'?v:'',t==='CHQ'?c.refDate||'':'',t==='CHQ'?c.refNo||'':'',c.receipt||'',c.inv||'',c.added||'',t==='NEFT'?c.refNo||'':'',t==='CHQ'?c.status||'':'']})},
+  log(){return DB.log.map(l=>[l.at,l.kind,l.note||'',l.added||0,l.dups||0,l.issues||0,l.total||0,l.created||0])}
+};
+const blocked=k=>(k==='sales'&&BAD.sales.length)||(k==='coll'&&BAD.coll.length)||(k==='opening'&&BAD.opening.length);
+function setSync(st,msg){_state=st;_msg=msg||'';const e=$('#sync');if(!e)return;
+  const nbad=BAD.sales.length+BAD.coll.length+BAD.opening.length;let cls='',t='';
+  if(st==='err'){cls='err';t='⚠ Changes not saved - click to retry'}
+  else if(st==='conflict'){cls='err';t='⚠ Data was updated elsewhere - click to refresh'}
+  else if(nbad){cls='warn';t='⚠ '+nbad+' data row(s) unreadable - click'}
+  e.className=cls;e.textContent=t;e.style.display=t?'':'none';e.title=msg||''}
+function scheduleSave(){if(!SYNC_READY)return;setSync('dirty');clearTimeout(_st);_st=setTimeout(flush,900)}
+async function flush(){
+  clearTimeout(_st);if(_saving||!SYNC_READY)return;
+  const sections={},js={};
+  for(const k in SEC){if(blocked(k))continue;const rows=SEC[k](),j=JSON.stringify(rows);if(j!==LAST[k]){sections[k]=rows;js[k]=j}}
+  if(!Object.keys(sections).length){setSync('ok');return}
+  _saving=true;setSync('saving');let again=false;
+  try{
+    const res=await apiPost({action:'save',baseRev:REV,sections});
+    if(res.conflict){_saving=false;setSync('conflict');onConflict();return}
+    if(!res.ok)throw new Error(res.error||'Save failed');
+    REV=res.rev;for(const k in js)LAST[k]=js[k];setSync('ok');again=true;
+  }catch(e){setSync('err',String(e.message||e));toast('Could not save changes: '+(e.message||e),true)}
+  _saving=false;if(again)flush();
+}
+async function onConflict(){
+  if(confirm('The data was changed by someone else after you opened it.\n\nOK = load the latest data (your last unsaved change is discarded)\nCancel = stay here (nothing is saved until you refresh)'))await loadFromSheet(false);
+}
+window.addEventListener('beforeunload',e=>{if(_state==='dirty'||_state==='saving'||_state==='err'){e.preventDefault();e.returnValue=''}});
+window.addEventListener('online',()=>{if(_state==='err')flush()});
+
+/* ===== build DB from the sheet ===== */
+function tbl(sec){return {headers:sec.headers,rows:sec.rows.map(r=>{const o={n:r.n};sec.headers.forEach((h,i)=>{o[h]=r.v[i]===''?null:r.v[i]});return o})}}
+const each=(arr,fn)=>new Promise((res,rej)=>{let i=0;const run=()=>{try{const t0=performance.now();for(;i<arr.length&&performance.now()-t0<10;i++)fn(arr[i],i);if(i<arr.length)setTimeout(run,0);else res()}catch(e){rej(e)}};run()});
+async function buildDB(raw){
+  const db=newDB();DB=db;dirtyParties();BAD={sales:[],coll:[],opening:[]};
+  const st={};tbl(raw.settings).rows.forEach(r=>{if(r['KEY']!=null)st[clean(r['KEY'])]=r['VALUE']});
+  const S=DB.settings;
+  if(st.company)DB.company=clean(st.company);
+  ['openDate','fyStart','fyEnd'].forEach(k=>{const d=toISO(st[k]);if(d)S[k]=d});
+  if(num(st.creditDays))S.creditDays=num(st.creditDays);
+  if(st.buckets!=null){const b=String(st.buckets).split(/[,\s]+/).map(Number).filter(x=>x>0);if(b.length&&b.every((x,i)=>!i||x>b[i-1]))S.buckets=b}
+  if(st.pendingChq!=null)S.pendingChq=/^(true|1|yes)$/i.test(String(st.pendingChq));
+  if(st.fyLabel)S.fyLabel=clean(st.fyLabel);if(st.openLabel)S.openLabel=clean(st.openLabel);
+  const th=lsGet('ea_theme');if(th)S.theme=th;
+  // parties (master list, then aliases)
+  const pr=tbl(raw.parties).rows;
+  await each(pr,r=>{const nm=clean(r['PARTY NAME']);if(nm&&!clean(r['ALIAS OF'])&&!DB.parties[nk(nm)])DB.parties[nk(nm)]={name:nm}});
+  dirtyParties();
+  await each(pr,r=>{const nm=clean(r['PARTY NAME']),al=clean(r['ALIAS OF']);if(nm&&al){const t=findParty(al);if(t)DB.alias[nk(nm)]=t}});
+  // opening outstanding
+  await each(tbl(raw.opening).rows,r=>{const nm=clean(r['PARTY NAME']),v=num(r['VALUE']);
+    if(!nm&&v==null)return;if(!nm||v==null){BAD.opening.push('FY25-26_OS row '+r.n+': '+(nm||'(no party)')+' / '+(r['VALUE']==null?'(no value)':r['VALUE']));return}
+    let k=DB.parties[nk(nm)]?nk(nm):(DB.alias[nk(nm)]||null);if(!k||!DB.parties[k]){k=nk(nm);DB.parties[k]={name:nm};dirtyParties()}
+    DB.opening[k]=r2((DB.opening[k]||0)+v)});
+  const resolve=name=>findParty(name)||ensureParty(name);
+  // sales (+ cancelled invoices)
+  const sl=tbl(raw.sales);
+  await each(parseSalesRows(sl.rows),r=>{
+    const date=toISO(r.date),party=clean(r.party),inv=clean(r.inv),val=num(r.value);
+    if(!party&&!inv&&val==null&&!date)return;
+    if(isCancelled(party)||(val==null&&inv&&!party)){if(inv&&!DB.cancelled.some(x=>ik(x.inv)===ik(inv)))DB.cancelled.push({date,inv});return}
+    const prob=[];if(!date)prob.push('invalid date');if(!party)prob.push('party missing');if(!inv)prob.push('invoice no. missing');if(val==null)prob.push('invalid value');else if(val===0)prob.push('zero value');
+    if(prob.length){BAD.sales.push('SALES row '+r.n+': '+prob.join(', '));return}
+    DB.sales.push({id:DB.seq++,date,k:resolve(party),inv,value:val})});
+  // collection
+  const ct=tbl(raw.coll),upd={};ct.rows.forEach(r=>{upd[r.n]=toISO(r['LAST UPDATED'])});
+  await each(parseCollRows(ct),r=>{
+    const date=toISO(r.date),party=clean(r.party),val=num(r.value),type=normType(r.type);
+    if(!party&&val==null&&!date)return;
+    const prob=[];if(!date)prob.push('invalid date');if(!party)prob.push('party missing');if(!type)prob.push('invalid type "'+clean(r.type)+'"');if(val==null||val<=0)prob.push('invalid/zero value');
+    if(prob.length){BAD.coll.push('COLLECTION row '+r.n+': '+prob.join(', '));return}
+    let status=type==='CHQ'?(nk(r.status)||'CLEARED'):'';if(type==='CHQ'&&!['PENDING','CLEARED','BOUNCED'].includes(status))status='CLEARED';
+    DB.coll.push({id:DB.seq++,date,type,k:resolve(party),refDate:toISO(r.refDate),refNo:clean(r.refNo),value:val,receipt:clean(r.receipt),inv:clean(r.inv),status,added:upd[r.n]||''})});
+  // import log
+  DB.log=tbl(raw.log).rows.map(r=>({at:String(r['AT']||''),kind:r['KIND']||'',note:r['NOTE']||'',added:num(r['ADDED'])||0,dups:num(r['DUPS'])||0,issues:num(r['ISSUES'])||0,total:num(r['TOTAL'])||0,created:num(r['CREATED'])||0})).slice(0,200);
+  dirtyParties();_cache={};
+  LAST={};for(const k in SEC)LAST[k]=JSON.stringify(SEC[k]());
+  if(!raw.parties.rows.length)LAST.parties=null;      // first run: create PARTY MASTER
+  if(!raw.settings.rows.length)LAST.settings=null;    // first run: create SETTINGS
+}
+function showSetup(){$('#view').innerHTML='<div class="card"><h1>Setup required</h1><div class="sub">The backend address is not configured. Paste the deployed web app URL into WEB_APP_URL near the top of the data section of this file, then reopen it.</div></div>';setSync('err','WEB_APP_URL not set')}
+function showLoadError(e){console.error(e);$('#view').innerHTML='<div class="card"><h1>Could not load data</h1><div class="sub">'+esc(e.message||e)+'</div><button class="btn" data-act="reload">Retry</button></div>';setSync('err',String(e.message||e))}
+async function loadFromSheet(silent){
+  if(!HAS_GAS&&!/^https:\/\//.test(WEB_APP_URL)){showSetup();return false}
+  if(!silent&&!SYNC_READY)$('#view').innerHTML='<div class="card" style="text-align:center;padding:40px"><div class="spin"></div><div style="margin-top:12px" class="mut">Loading…</div></div>';
+  try{
+    const raw=await apiGet('getAll');if(!raw.ok)throw new Error(raw.error||'Server error');
+    await buildDB(raw);REV=raw.rev;SYNC_READY=true;applyTheme();setSync('ok');render();
+    if(BAD.sales.length+BAD.coll.length+BAD.opening.length)toast('Some data rows could not be read - click the warning at the top',true);
+    flush();return true;
+  }catch(e){if(SYNC_READY&&silent){console.error(e)}else if(SYNC_READY){toast('Reload failed: '+(e.message||e),true)}else showLoadError(e);return false}
+}
+async function pollRev(){
+  if(!SYNC_READY||_saving||_state==='dirty'||_state==='saving'||document.hidden||$('#mask').classList.contains('on'))return;
+  try{const r=await apiGet('getRev');if(r.ok&&r.rev!==REV&&_state!=='dirty'&&!_saving){await loadFromSheet(true)}}catch(e){}
+}
+setInterval(pollRev,45000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pollRev()});
+async function archiveSheets(){try{const r=await apiPost({action:'archive'});if(!r.ok)throw new Error(r.error);return true}catch(e){return confirm('Could not create a backup copy ('+(e.message||e)+').\n\nContinue anyway?')}}
+
+/* ===== allocation engine ===== */
+let _cache={};
+const recIncluded=r=>r.type!=='CHQ'||!r.status||r.status==='CLEARED'||(r.status==='PENDING'&&DB.settings.pendingChq);
+function bucketLabels(){const B=DB.settings.buckets;const L=[];let prev=0;B.forEach((b,i)=>{L.push(i===0?'0-'+b:(prev+1)+'-'+b);prev=b});L.push(prev+'+');return L}
+function bucketOf(days){const B=DB.settings.buckets;for(let i=0;i<B.length;i++)if(days<=B[i])return i;return B.length}
+function compute(asOn){
+  const key=asOn+'|'+DB.settings.pendingChq+'|'+DB.settings.openDate;
+  if(_cache[key])return _cache[key];
+  const S=DB.settings,nb=S.buckets.length+1,P={},billByInv={},recInfo={};
+  const get=k=>P[k]||(P[k]={k,name:pname(k),bills:[],recs:[],adv0:0,open:0,sales:0,coll:0,cn:0});
+  Object.keys(DB.parties).forEach(k=>get(k));
+  Object.keys(DB.opening).forEach(k=>{const v=DB.opening[k];if(!DB.parties[k]||!v)return;const p=get(k);p.open=v;
+    if(v>0)p.bills.push({inv:'OPENING B/F',date:S.openDate,amt:v,bal:v,open:true,alloc:[],k});else p.adv0=-v});
+  DB.sales.forEach(s=>{if(s.date>asOn||!DB.parties[s.k])return;const p=get(s.k);
+    if(s.value>=0){const b={inv:s.inv,date:s.date,amt:s.value,bal:s.value,alloc:[],k:s.k,id:s.id};p.bills.push(b);p.sales+=s.value;if(!billByInv[ik(s.inv)])billByInv[ik(s.inv)]=b}
+    else{p.recs.push({id:'S'+s.id,date:s.date,type:'CN',value:-s.value,inv:'',cn:true,k:s.k});p.cn+=-s.value}});
+  DB.coll.forEach(c=>{if(c.date>asOn||!DB.parties[c.k])return;if(!recIncluded(c))return;get(c.k).recs.push({id:c.id,date:c.date,type:c.type,value:c.value,inv:c.inv||'',k:c.k});get(c.k).coll+=c.value});
+  const tot={open:0,sales:0,coll:0,net:0,adv:0,b:new Array(nb).fill(0),overdue:0};
+  Object.keys(P).forEach(k=>{
+    const p=P[k];p.bills.sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:(a.open?-1:b.open?1:0));
+    p.recs.sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:String(a.id).localeCompare(String(b.id),undefined,{numeric:true}));
+    const idx={};p.bills.forEach(b=>{const x=ik(b.inv);if(!idx[x])idx[x]=b});
+    const pool=[];p.unmatched=[];
+    if(p.adv0>0)pool.push({rec:{id:'OPEN',date:S.openDate,type:'OPENING CR',value:p.adv0,k},amt:p.adv0});
+    // phase 1: invoice-specific
+    for(const r of p.recs){
+      r.rem=r.value;r.alloc=[];r.bad=[];
+      const raw=clean(r.inv);
+      if(raw){let refs;if(idx[ik(raw)])refs=[ik(raw)];else refs=raw.split(/[,;&\n]+|\s+/).map(ik).filter(Boolean);
+        for(const ref of refs){const b=idx[ref];if(!b){r.bad.push(ref);continue}
+          const t=Math.min(r.rem,b.bal);if(t>EPS){b.bal=r2(b.bal-t);r.rem=r2(r.rem-t);b.alloc.push({rec:r,amt:t,ph:1});r.alloc.push({bill:b,amt:t,ph:1})}}
+        if(r.bad.length)p.unmatched.push(r)}
+    }
+    // phase 2: FIFO on bills dated <= receipt date
+    for(const r of p.recs){if(r.rem<=EPS)continue;
+      for(const b of p.bills){if(r.rem<=EPS)break;if(b.bal<=EPS||b.date>r.date)continue;
+        const t=Math.min(r.rem,b.bal);b.bal=r2(b.bal-t);r.rem=r2(r.rem-t);b.alloc.push({rec:r,amt:t,ph:2});r.alloc.push({bill:b,amt:t,ph:2})}
+      if(r.rem>EPS)pool.push({rec:r,amt:r.rem})}
+    // phase 3: leftover credit against any remaining (later) bills
+    for(const b of p.bills){if(b.bal<=EPS)continue;
+      for(const q of pool){if(q.amt<=EPS)continue;const t=Math.min(q.amt,b.bal);b.bal=r2(b.bal-t);q.amt=r2(q.amt-t);
+        b.alloc.push({rec:q.rec,amt:t,ph:3});if(q.rec.alloc)q.rec.alloc.push({bill:b,amt:t,ph:3})}}
+    p.adv=0;for(const q of pool){if(q.amt>EPS){p.adv=r2(p.adv+q.amt);q.rec.advance=q.amt}}
+    p.b=new Array(nb).fill(0);p.overdue=0;p.oldest=null;p.outBills=0;
+    for(const b of p.bills){if(b.bal>EPS){const d=dayDiff(b.date,asOn);b.days=d;b.bkt=bucketOf(d);p.b[b.bkt]=r2(p.b[b.bkt]+b.bal);p.outBills=r2(p.outBills+b.bal);
+      if(d>S.creditDays)p.overdue=r2(p.overdue+b.bal);if(!p.oldest||b.date<p.oldest)p.oldest=b.date}
+      else{b.days=dayDiff(b.date,asOn);b.bkt=-1}}
+    p.net=r2(p.outBills-p.adv);
+    p.last=null;for(const r of p.recs)if(!r.cn&&(!p.last||r.date>p.last))p.last=r.date;
+    p.oldestDays=p.oldest?dayDiff(p.oldest,asOn):null;
+    tot.open=r2(tot.open+p.open);tot.sales=r2(tot.sales+p.sales);tot.coll=r2(tot.coll+p.coll+p.cn);tot.net=r2(tot.net+p.net);tot.adv=r2(tot.adv+p.adv);tot.overdue=r2(tot.overdue+p.overdue);
+    p.b.forEach((v,i)=>tot.b[i]=r2(tot.b[i]+v));
+    for(const r of p.recs)recInfo[r.id]=r;
+  });
+  return _cache[key]={P,tot,billByInv,recInfo,asOn};
+}
+
+/* ===== ledger ===== */
+function buildLedger(k,from,to){
+  const S=DB.settings,rows=[];
+  const op=DB.opening[k]||0;
+  if(op)rows.push({date:S.openDate,ord:0,kind:'OB',part:'Opening Balance B/F ('+S.openLabel+')',ref:'',dr:op>0?op:0,cr:op<0?-op:0});
+  for(const s of DB.sales){if(s.k!==k||s.date>to)continue;
+    if(s.value>=0)rows.push({date:s.date,ord:1,kind:'SALE',part:'Sales Invoice',ref:s.inv,dr:s.value,cr:0,id:s.id});
+    else rows.push({date:s.date,ord:2,kind:'CN',part:'Credit Note',ref:s.inv,dr:0,cr:-s.value,id:s.id})}
+  for(const c of DB.coll){if(c.k!==k||c.date>to)continue;const inc=recIncluded(c);
+    let part='Receipt - '+c.type+(c.type==='CHQ'&&c.status&&c.status!=='CLEARED'?' ('+c.status+')':'');
+    const refs=[];if(c.refNo)refs.push(c.type==='CHQ'?'Chq '+c.refNo:c.type==='UPI'?'Txn '+c.refNo:c.type==='NEFT'?'UTR '+c.refNo:c.refNo);
+    if(c.receipt)refs.push('Rcpt '+c.receipt);if(c.inv)refs.push('Against '+c.inv);
+    rows.push({date:c.date,ord:2,kind:'REC',part,ref:refs.join(' | '),dr:0,cr:inc?c.value:0,id:c.id,memo:!inc})}
+  rows.sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.ord-b.ord);
+  let bal=0,openBal=0;const out=[];
+  for(const r of rows){
+    if(r.date<from){bal=r2(bal+r.dr-r.cr);continue}
+    out.push(r)}
+  openBal=bal;
+  const res=[];let run=openBal,dr=0,cr=0;
+  if(from>S.openDate||openBal)res.push({date:from,kind:'BF',part:'Balance Brought Forward',ref:'',dr:0,cr:0,bal:openBal,isBF:true});
+  for(const r of out){run=r2(run+r.dr-r.cr);dr=r2(dr+r.dr);cr=r2(cr+r.cr);res.push({...r,bal:run})}
+  return {rows:res,open:openBal,dr,cr,close:run};
+}
+
+/* ===== import parsing ===== */
+function sheetObjs(ws){
+  const a=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null});
+  return a;
+}
+function findTable(wb,needs){
+  for(const sn of wb.SheetNames){const a=sheetObjs(wb.Sheets[sn]);
+    for(let i=0;i<Math.min(a.length,12);i++){const h=(a[i]||[]).map(x=>nk(x));
+      if(needs.every(n=>h.includes(n))){const rows=[];
+        for(let j=i+1;j<a.length;j++){const o={n:j+1};let any=false;(a[j]||[]).forEach((v,c)=>{if(h[c]){o[h[c]]=v;if(v!=null&&v!=='')any=true}});if(any)rows.push(o)}
+        return {sheet:sn,headers:h,rows}}}}
+  return null;
+}
+const normType=t=>{const s=nk(t);if(TYPES.includes(s))return s;if(/^CHE?Q|CHECK/.test(s))return 'CHQ';if(/RTGS|IMPS|NEFT|ONLINE|BANK|TRANSFER/.test(s))return 'NEFT';if(/UPI|GPAY|PHONEPE|PAYTM|GOOGLE/.test(s))return 'UPI';if(/CASH/.test(s))return 'CASH';return null};
+const isCancelled=(p)=>/^\(?\s*cancel/i.test(clean(p));
+
+function parseSalesRows(rows){
+  return rows.map(r=>({n:r.n,date:r['DATE'],party:r['PARTY']!=null?r['PARTY']:r['PARTY NAME'],inv:r['INV NO.']!=null?r['INV NO.']:r['INV NO'],value:r['VALUE']}));
+}
+function parseCollRows(tab){
+  const out=[],H=tab.headers,wide=H.includes('NEFT VALUE')||H.includes('CASH VALUE')||H.includes('UPI VALUE')||H.includes('CHQ VALUE');
+  for(const r of tab.rows){
+    if(!wide){out.push({n:r.n,date:r['DATE'],type:r['TYPE'],party:r['PARTY NAME']!=null?r['PARTY NAME']:r['PARTY'],refDate:r['REF DATE'],refNo:r['REF NO.']!=null?r['REF NO.']:r['REF NO'],value:r['VALUE'],receipt:r['RECEIPT NO.'],inv:r['AGAINST INV.'],status:r['CHQ STATUS']})}
+    else{
+      const base={n:r.n,date:r['DATE'],party:r['PARTY NAME'],receipt:r['RECEIPT NO.'],inv:r['AGAINST INV.']};
+      const tp=nk(r['TYPE']);let any=false;
+      const add=(type,val,refNo,refDate,st)=>{if(num(val)){any=true;out.push({...base,type,value:val,refNo,refDate,status:st})}};
+      add('NEFT',r['NEFT VALUE'],r['NEFT UTR NO.']);add('CASH',r['CASH VALUE']);add('UPI',r['UPI VALUE'],r['UPI TXN NO.']);add('CHQ',r['CHQ VALUE'],r['CHQ NO.'],r['CHQ DATE'],r['CHQ STATUS']);
+      if(!any&&(base.party||base.date))out.push({...base,type:tp||'CASH',value:null})}
+  }
+  return out;
+}
+/* validate & classify. returns plan; does not mutate DB */
+function planSales(rows,opts={}){
+  const plan={kind:'sales',ok:[],issues:[],dups:[],cancelled:[],unknown:{},total:0};
+  const exist=new Map();for(const s of DB.sales)exist.set(ik(s.inv),s);
+  const canc=new Set(DB.cancelled.map(c=>ik(c.inv)));const seen=new Map();
+  for(const r of rows){
+    const date=toISO(r.date),party=clean(r.party),inv=clean(r.inv),val=num(r.value);
+    if(!party&&!inv&&val==null&&!date)continue;
+    if(isCancelled(party)||(val==null&&inv&&!party)){if(inv)plan.cancelled.push({date,inv});continue}
+    const prob=[];if(!date)prob.push('Invalid date');if(!party)prob.push('Party missing');if(!inv)prob.push('Invoice no. missing');if(val==null)prob.push('Invalid value');else if(val===0)prob.push('Zero value');
+    if(prob.length){plan.issues.push({n:r.n,msg:prob.join(', '),d:[disp(date),party,inv,val].join(' / ')});continue}
+    const x=ik(inv),e=exist.get(x)||seen.get(x);
+    if(e){const same=Math.abs(e.value-val)<EPS;plan.dups.push({n:r.n,inv,party,val,same,msg:same?'Duplicate - already present':'Conflict - same invoice no. with different value ('+fmt(e.value)+')'});continue}
+    const row={date,party,inv,value:val,n:r.n};seen.set(x,row);plan.ok.push(row);plan.total=r2(plan.total+val);
+    if(!findParty(party)){const u=plan.unknown[nk(party)]=plan.unknown[nk(party)]||{name:clean(party),count:0,value:0};u.count++;u.value+=val}
+  }
+  return plan;
+}
+function planColl(rows,opts={}){
+  const plan={kind:'coll',ok:[],issues:[],dups:[],unknown:{},total:0};
+  const keyOf=(c)=>[c.date,c.k||nk(c.party),c.type,c.value,nk(c.receipt),nk(c.refNo)].join('|');
+  const exist=new Set(DB.coll.map(c=>keyOf(c)));const seen=new Set();
+  for(const r of rows){
+    const date=toISO(r.date),party=clean(r.party),val=num(r.value),type=normType(r.type);
+    if(!party&&val==null&&!date)continue;
+    const prob=[];if(!date)prob.push('Invalid date');if(!party)prob.push('Party missing');if(!type)prob.push('Invalid type "'+clean(r.type)+'"');if(val==null||val<=0)prob.push('Invalid value');
+    if(prob.length){plan.issues.push({n:r.n,msg:prob.join(', '),d:[disp(date),party,r.type,val].join(' / ')});continue}
+    const pk=findParty(party);
+    const row={date,type,party,value:val,refNo:clean(r.refNo),refDate:toISO(r.refDate),receipt:clean(r.receipt),inv:clean(r.inv),status:type==='CHQ'?(nk(r.status)||'CLEARED'):'',n:r.n};
+    if(type==='CHQ'&&!['PENDING','CLEARED','BOUNCED'].includes(row.status))row.status='CLEARED';
+    const kk=[date,pk||nk(party),type,val,nk(row.receipt),nk(row.refNo)].join('|');
+    if(exist.has(kk)||seen.has(kk)){plan.dups.push({n:r.n,inv:row.inv,party,val,same:true,msg:'Duplicate - already present'});continue}
+    seen.add(kk);plan.ok.push(row);plan.total=r2(plan.total+val);
+    if(!pk){const u=plan.unknown[nk(party)]=plan.unknown[nk(party)]||{name:clean(party),count:0,value:0};u.count++;u.value+=val}
+  }
+  return plan;
+}
+/* commit plan. map: normalized unknown name -> party key | '__new__' */
+function commitPlan(plan,map,note){
+  map=map||{};let created=0;
+  const resolve=name=>{const k=findParty(name);if(k)return k;const m=map[nk(name)];
+    if(m&&m!=='__new__'&&DB.parties[m]){DB.alias[nk(name)]=m;return m}
+    const before=Object.keys(DB.parties).length;const kk=ensureParty(name);if(Object.keys(DB.parties).length>before)created++;return kk};
+  if(plan.kind==='sales'){
+    for(const r of plan.ok)DB.sales.push({id:DB.seq++,date:r.date,k:resolve(r.party),inv:r.inv,value:r.value});
+    for(const c of plan.cancelled)if(!DB.cancelled.some(x=>ik(x.inv)===ik(c.inv)))DB.cancelled.push(c);
+  }else{
+    for(const r of plan.ok)DB.coll.push({id:DB.seq++,date:r.date,type:r.type,k:resolve(r.party),refDate:r.refDate,refNo:r.refNo,value:r.value,receipt:r.receipt,inv:r.inv,status:r.status,added:todayISO()});
+  }
+  DB.log.unshift({at:new Date().toISOString(),kind:plan.kind==='sales'?'Sales import':'Collection import',note:note||'',added:plan.ok.length,dups:plan.dups.length,issues:plan.issues.length,total:plan.total,created});
+  DB.log=DB.log.slice(0,200);dirtyParties();bump();return {created};
+}
+/* full DB load (opening + sales + collection) */
+function loadFull(wb,replace){
+  const res={};
+  const os=findTable(wb,['PARTY NAME','VALUE']),sl=findTable(wb,['DATE','PARTY','INV NO.']);
+  let co=findTable(wb,['DATE','PARTY NAME','TYPE']);
+  if(replace){const keep={company:DB.company,settings:DB.settings};DB=newDB();DB.company=keep.company;DB.settings=keep.settings}
+  if(os){let n=0,t=0;for(const r of os.rows){const nm=clean(r['PARTY NAME']),v=num(r['VALUE']);if(!nm||v==null)continue;
+      let k=DB.parties[nk(nm)]?nk(nm):(DB.alias[nk(nm)]||null);if(!k||!DB.parties[k]){k=nk(nm);DB.parties[k]={name:clean(nm)};dirtyParties()}DB.opening[k]=r2((DB.opening[k]||0)+v);n++;t+=v}res.os={n,t:r2(t)}}
+  if(sl){const p=planSales(parseSalesRows(sl.rows));const m=commitPlan(p,{}, 'Database load');res.sales={n:p.ok.length,t:p.total,dups:p.dups.length,issues:p.issues.length,canc:p.cancelled.length,parties:m.created}}
+  if(co&&co.rows.length){const p=planColl(parseCollRows(co));const m=commitPlan(p,{}, 'Database load');res.coll={n:p.ok.length,t:p.total,dups:p.dups.length,issues:p.issues.length}}
+  dirtyParties();bump();return res;
+}
+</script>
+<script>'use strict';
+/* ===== UI plumbing ===== */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const UI={page:'dash',asOn:todayISO(),f:{},ts:{},tab:{}};
+const REP={};
+const F=(pg,k,d)=>{const o=UI.f[pg]=UI.f[pg]||{};if(o[k]===undefined)o[k]=d;return o[k]};
+function toast(msg,err){const d=document.createElement('div');d.className='t'+(err?' err':'');d.textContent=msg;$('#toast').appendChild(d);setTimeout(()=>d.remove(),err?6000:3200)}
+function modal(html,wide){const m=$('#mask');m.innerHTML='<div class="modal'+(wide?' wide':'')+'">'+html+'</div>';m.classList.add('on');return m.firstChild}
+function closeModal(){const m=$('#mask');m.classList.remove('on');m.innerHTML=''}
+function saveBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}
+const debounce=(fn,ms=200)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms)}};
+const sc=n=>n<-EPS?'neg':'';
+function asOnLabel(){return disp(UI.asOn)}
+
+/* party picker (autocomplete) */
+function partyPicker(inp,onPick){
+  let box=null,items=[],sel=-1;
+  const close=()=>{if(box){box.remove();box=null}};
+  const show=()=>{
+    const q=nk(inp.value);close();if(!q)return;
+    const toks=q.split(' ');items=[];
+    for(const k in DB.parties){const n=nk(DB.parties[k].name);if(toks.every(t=>n.includes(t))){items.push(k);if(items.length>=14)break}}
+    if(!items.length)return;
+    box=document.createElement('div');box.className='ac';const r=inp.getBoundingClientRect();
+    box.style.left=r.left+scrollX+'px';box.style.top=r.bottom+scrollY+2+'px';box.style.minWidth=Math.max(260,r.width)+'px';
+    box.innerHTML=items.map((k,i)=>'<div data-i="'+i+'">'+esc(pname(k))+'</div>').join('');sel=-1;
+    box.onmousedown=e=>{const d=e.target.closest('[data-i]');if(d){e.preventDefault();pick(items[+d.dataset.i])}};
+    document.body.appendChild(box)};
+  const pick=k=>{inp.value=pname(k);inp.dataset.k=k;close();onPick&&onPick(k)};
+  inp.addEventListener('input',()=>{inp.dataset.k='';show()});
+  inp.addEventListener('blur',()=>setTimeout(close,120));
+  inp.addEventListener('keydown',e=>{if(!box)return;const els=$$('div',box);
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();sel=(sel+(e.key==='ArrowDown'?1:-1)+els.length)%els.length;els.forEach((x,i)=>x.classList.toggle('on',i===sel))}
+    else if(e.key==='Enter'){e.preventDefault();pick(items[sel>=0?sel:0])}else if(e.key==='Escape')close()});
+}
+function partyKeyFromInput(inp){return inp.dataset.k||findParty(inp.value)}
+
+/* ===== generic report table ===== */
+/* col: {t:title,get:(r)=>raw,type:'t'|'n'|'d',tot:bool,html:(r)=>html,cls,sort:bool} */
+function repView(id,rep,opts={}){
+  REP[id]=rep;const st=UI.ts[id]=UI.ts[id]||{sort:null,dir:1,page:0,size:100};
+  const host=$('#rep-'+id);if(!host)return;
+  let rows=rep.rows;
+  if(st.sort!=null){const c=rep.cols[st.sort];const g=c.get;
+    rows=[...rows].sort((a,b)=>{let x=g(a),y=g(b);if(x==null)x=c.type==='n'?-Infinity:'';if(y==null)y=c.type==='n'?-Infinity:'';
+      return (typeof x==='number'&&typeof y==='number'?x-y:String(x).localeCompare(String(y),undefined,{numeric:true,sensitivity:'base'}))*st.dir})}
+  rep._sorted=rows;
+  const pages=Math.max(1,Math.ceil(rows.length/st.size));if(st.page>=pages)st.page=pages-1;
+  const sl=rows.slice(st.page*st.size,(st.page+1)*st.size);
+  const cell=(c,r,i)=>{const v=c.get(r);let h=c.html?c.html(r,i):(c.type==='n'?(c.int?(v==null?'':v):(c.dash&&!v?'<span class="mut">-</span>':fmt(v))):c.type==='d'?disp(v):esc(v==null?'':v));
+    let cls=(c.type==='n'?'n ':'')+(c.wrap?'w ':'')+(c.type==='n'&&c.neg!==false&&typeof v==='number'&&v<-EPS?'neg ':'')+(c.cls||'');return '<td class="'+cls+'">'+h+'</td>'};
+  let h='<div class="tw"><table><thead><tr>'+rep.cols.map((c,i)=>'<th class="'+(c.type==='n'?'n':'')+'" data-act="sort" data-id="'+id+'" data-i="'+i+'">'+esc(c.t)+(st.sort===i?(st.dir>0?' ▲':' ▼'):'')+'</th>').join('')+'</tr></thead><tbody>';
+  h+=sl.map((r,j)=>'<tr>'+rep.cols.map(c=>cell(c,r,st.page*st.size+j)).join('')+'</tr>').join('')||'<tr><td colspan="'+rep.cols.length+'" class="mut" style="padding:34px;text-align:center"><svg class="emp" viewBox="0 0 120 90" width="120" height="90"><ellipse cx="60" cy="80" rx="34" ry="5" fill="var(--line)"/><rect x="30" y="22" width="60" height="50" rx="8" fill="var(--accbg)" stroke="var(--acc)" stroke-width="2"/><path d="M42 40h36M42 50h24M42 60h30" stroke="var(--acc)" stroke-width="3" stroke-linecap="round" opacity=".5"/><circle class="ec" cx="88" cy="28" r="12" fill="none" stroke="var(--c2)" stroke-width="3"/><path d="M97 37l9 9" stroke="var(--c2)" stroke-width="4" stroke-linecap="round"/></svg><div style="margin-top:6px">No records found</div></td></tr>';
+  h+='</tbody>';
+  if(rep.totals!==false&&rows.length&&rep.cols.some(c=>c.tot)){h+='<tfoot><tr>'+rep.cols.map((c,i)=>{if(c.tot){const s=r2(rows.reduce((a,r)=>a+(+c.get(r)||0),0));return '<td class="n'+(s<-EPS?' neg':'')+'">'+fmt(s)+'</td>'}return '<td>'+(i===(rep.cols[0].t==='#'?1:0)?'TOTAL ('+rows.length+')':'')+'</td>'}).join('')+'</tr></tfoot>'}
+  h+='</table></div><div class="pager"><span>'+rows.length+' record(s)</span><span>';
+  h+='<button class="btn sm sec" data-act="pg" data-id="'+id+'" data-d="-1" '+(st.page<=0?'disabled':'')+'>‹ Prev</button> Page '+(st.page+1)+' / '+pages+' <button class="btn sm sec" data-act="pg" data-id="'+id+'" data-d="1" '+(st.page>=pages-1?'disabled':'')+'>Next ›</button> ';
+  h+='<select data-act="psize" data-id="'+id+'">'+[50,100,250,500,1000].map(n=>'<option '+(n===st.size?'selected':'')+'>'+n+'</option>').join('')+'</select> / page</span></div>';
+  host.innerHTML=h;
+}
+const exBtns=id=>['xl:⬇ Excel','pdf:⬇ PDF','csv:⬇ CSV','copy:⧉ Copy','print:🖨 Print'].map(x=>{const[a,l]=x.split(':');return '<button class="btn sec" data-act="'+a+'" data-id="'+id+'">'+l+'</button>'}).join(' ')+(id==='overdue'?' <button class="btn" data-act="wa">💬 Reminder messages</button>':'');
+const repHost=id=>'<div id="rep-'+id+'"></div>';
+
+/* ===== exports ===== */
+const HDR={font:{bold:true,color:{rgb:'FFFFFF'},sz:10},fill:{fgColor:{rgb:'0B6B5C'}},alignment:{horizontal:'center',vertical:'center',wrapText:true}};
+function xlsxFromRep(rep,title,sub){
+  const cols=rep.cols.filter(c=>c.t!==''),rows=rep._sorted||rep.rows;
+  const A=[[{v:DB.company,s:{font:{bold:true,sz:14}}}],[{v:title,s:{font:{bold:true,sz:12}}}],[{v:sub||'',s:{font:{italic:true,color:{rgb:'555555'}}}}],[]];
+  A.push(cols.map(c=>({v:c.t,t:'s',s:HDR})));
+  rows.forEach((r,ri)=>A.push(cols.map(c=>{const v=c.t==='#'?ri+1:c.get(r);
+    if(c.type==='n')return v==null||v===''?{v:'',t:'s'}:(c.int?{v:+v,t:'n',z:'0'}:{v:+v,t:'n',z:'#,##0.00',s:{numFmt:'#,##0.00'}});
+    if(c.type==='d')return v?{v:serial(v),t:'n',z:'dd-mm-yyyy',s:{numFmt:'dd-mm-yyyy'}}:{v:'',t:'s'};
+    return {v:v==null?'':v,t:typeof v==='number'?'n':'s'}})));
+  if(rep.totals!==false&&cols.some(c=>c.tot)){
+    A.push(cols.map((c,i)=>c.tot?{v:r2(rows.reduce((a,r)=>a+(+c.get(r)||0),0)),t:'n',z:'#,##0.00',s:{font:{bold:true},numFmt:'#,##0.00',fill:{fgColor:{rgb:'E4F3EF'}}}}:{v:i===0?'TOTAL':'',t:'s',s:{font:{bold:true},fill:{fgColor:{rgb:'E4F3EF'}}}}))}
+  const ws=XLSX.utils.aoa_to_sheet(A);
+  ws['!cols']=cols.map((c,i)=>{let w=c.t.length+2;rows.slice(0,300).forEach(r=>{const v=c.get(r);const l=c.type==='n'?14:c.type==='d'?11:String(v==null?'':v).length;if(l+2>w)w=l+2});return {wch:Math.min(Math.max(w,8),48)}});
+  ws['!freeze']={xSplit:0,ySplit:5};ws['!views']=[{state:'frozen',ySplit:5}];
+  return ws;
+}
+function saveXlsx(sheets,fname){const wb=XLSX.utils.book_new();sheets.forEach(([n,ws])=>XLSX.utils.book_append_sheet(wb,ws,n.slice(0,31)));
+  XLSX.writeFile(wb,fname)}
+function exportXlsx(id){const rep=REP[id];if(!rep)return;saveXlsx([[rep.sheet||'Report',xlsxFromRep(rep,rep.title,rep.sub)]],(rep.file||id)+'_'+UI.asOn+'.xlsx')}
+function pdfHead(doc,title,sub,W){
+  doc.setFillColor(11,107,92);doc.rect(0,0,W,19,'F');doc.setFillColor(224,138,30);doc.rect(0,19,W,1.2,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(14);doc.setTextColor(255);doc.text(DB.company,14,10.5);
+  doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(190,225,217);doc.text('OUTSTANDING & COLLECTION ACCOUNTS',14,15.5);
+  doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(255);doc.text(title,W-14,10.5,{align:'right'});
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(190,225,217);doc.text('Generated '+disp(todayISO()),W-14,15.5,{align:'right'});
+  doc.setFontSize(8.5);doc.setTextColor(80);if(sub)doc.text(sub,14,24.5);
+  doc.setDrawColor(11,107,92);doc.setLineWidth(.3);doc.line(14,26.5,W-14,26.5);
+}
+function pdfFoot(doc,from){const n=doc.getNumberOfPages(),W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
+  for(let i=from||1;i<=n;i++){doc.setPage(i);doc.setDrawColor(200,215,210);doc.setLineWidth(.2);doc.line(14,H-9,W-14,H-9);doc.setFontSize(7.5);doc.setTextColor(120);doc.text('Generated '+disp(todayISO())+' | '+DB.company,14,H-6);doc.text('Page '+(i-(from||1)+1)+' of '+(n-(from||1)+1),W-14,H-6,{align:'right'})}}
+function pdfTable(doc,rep,rows,startY,opts={}){
+  const cols=rep.cols.filter(c=>c.t!==''),head=[cols.map(c=>c.t)];
+  const body=rows.map((r,ri)=>cols.map(c=>{const v=c.t==='#'?ri+1:c.get(r);return c.type==='n'?(c.int?(v==null?'':String(v)):fmt(v)):c.type==='d'?disp(v):(v==null?'':String(v))}));
+  let foot;if(rep.totals!==false&&cols.some(c=>c.tot)){foot=[cols.map((c,i)=>c.tot?fmt(rows.reduce((a,r)=>a+(+c.get(r)||0),0)):(i===0?'TOTAL':''))]}
+  const cs={};cols.forEach((c,i)=>{if(c.type==='n')cs[i]={halign:'right'};if(c.pw)cs[i]=Object.assign(cs[i]||{},{cellWidth:c.pw})});
+  doc.autoTable({head,body,foot,startY,theme:'grid',margin:{left:14,right:14,top:30,bottom:12},styles:{fontSize:opts.fs||7.5,cellPadding:1.4,lineColor:[210,220,216],lineWidth:.15,overflow:'linebreak'},
+    headStyles:{fillColor:[11,107,92],textColor:255,halign:'center',fontSize:(opts.fs||7.5)},footStyles:{fillColor:[228,243,239],textColor:20,fontStyle:'bold'},alternateRowStyles:{fillColor:[248,250,249]},columnStyles:cs,showFoot:'lastPage',
+    didParseCell:d=>{if(d.section==='head'&&cols[d.column.index].type==='n')d.cell.styles.halign='right'},
+    didDrawPage:()=>{}});
+}
+function exportPdf(id){
+  const rep=REP[id];if(!rep)return;const {jsPDF}=window.jspdf;
+  const land=rep.cols.length>6;const doc=new jsPDF({orientation:land?'landscape':'portrait',unit:'mm',format:'a4',compress:true});
+  const W=doc.internal.pageSize.getWidth();const rows=rep._sorted||rep.rows;
+  pdfTable(doc,rep,rows,30,{fs:rep.cols.length>10?6.5:rep.cols.length>8?7:7.5});
+  const H=doc.internal.pageSize.getHeight();let sy=(doc.lastAutoTable?doc.lastAutoTable.finalY:40)+20;if(sy>H-30){doc.addPage();sy=40}
+  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(30);doc.text('For '+DB.company,W-14,sy,{align:'right'});doc.setDrawColor(90);doc.setLineWidth(.3);doc.line(W-64,sy+14,W-14,sy+14);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(90);doc.text('Authorised Signatory',W-14,sy+18.5,{align:'right'});
+  const n=doc.getNumberOfPages();for(let i=1;i<=n;i++){doc.setPage(i);pdfHead(doc,rep.title,rep.sub,W)}
+  pdfFoot(doc);doc.save((rep.file||id)+'_'+UI.asOn+'.pdf');
+}
+
+/* ===== shell ===== */
+const NAV=[['dash','Dashboard'],
+['_Outstanding & Credit'],['os','Outstanding (Party-wise)'],['aging','Aging Report'],['overdue','Overdue Follow-up'],['bills','Open Invoices (Bill-wise)'],['cal','Dues Calendar'],['ledger','Party Ledger'],
+['_Sales & Collection'],['sales','Sales Register'],['coll','Collection Register'],['daily','Daily Collection'],['msum','Monthly Summary'],['mode','Collection Mode-wise'],['topp','Top Parties'],
+['_Audit'],['exc','Exceptions & Audit'],
+['_Data'],['parties','Party Master'],['imp','Import / Export']];
+UI.grpOpen=UI.grpOpen||{};
+const NIC={dash:'🏠',os:'💰',aging:'⏳',overdue:'🔔',bills:'🧾',cal:'📅',ledger:'📒',sales:'🛒',coll:'💵',daily:'☀️',msum:'📊',mode:'💳',topp:'🏆',exc:'⚠️',parties:'👥',imp:'⇅'},ni=k=>'<u>'+(NIC[k]||'•')+'</u>';
+function renderNav(){const out=[];let g=null;
+  NAV.forEach(n=>{if(n.length===1){g={name:n[0].slice(1),items:[]};out.push(g)}else if(g)g.items.push(n);else out.push({solo:n})});
+  $('#side').innerHTML=out.map(x=>{if(x.solo)return '<a data-act="nav" data-p="'+x.solo[0]+'" class="'+(UI.page===x.solo[0]?'on':'')+'">'+ni(x.solo[0])+x.solo[1]+'</a>';
+    const has=x.items.some(i=>i[0]===UI.page),off=!(UI.grpOpen[x.name]||has);
+    return '<div class="grp gh'+(off?' off':'')+'" data-act="grp" data-g="'+esc(x.name)+'"><span>'+esc(x.name)+'</span><em>'+x.items.length+'</em><i>▾</i></div><div class="gb'+(off?' off':'')+'">'+x.items.map(n=>'<a data-act="nav" data-p="'+n[0]+'" class="'+(UI.page===n[0]?'on':'')+'">'+ni(n[0])+n[1]+'</a>').join('')+'</div>'}).join('')}
+function go(p,params){if(p==='set')p='dash';UI.page=p;if(params)Object.assign(UI.f[p]=UI.f[p]||{},params);$('#side').classList.remove('on');renderNav();render()}
+
+function ring(l,pct,c,sub){pct=Math.max(0,Math.min(100,pct||0));const C=226.2;return '<div class="rg"><svg viewBox="0 0 90 90"><circle cx="45" cy="45" r="36" fill="none" stroke="var(--accbg)" stroke-width="9"/><circle class="rr" cx="45" cy="45" r="36" fill="none" stroke="'+c+'" stroke-width="9" stroke-linecap="round" transform="rotate(-90 45 45)" style="stroke-dasharray:'+(C*pct/100)+' '+C+'"/><text class="gv" x="45" y="50" text-anchor="middle">'+pct.toFixed(0)+'%</text></svg><div><b>'+l+'</b><span>'+sub+'</span></div></div>'}
+function donut(items){const C=339.292,tot=items.reduce((a,i)=>a+i.v,0)||1;let off=0;
+  const cl=['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)'];
+  const seg=items.map((it,i)=>{const len=C*it.v/tot,e='<circle class="sg" '+(it.go?'data-act="chart" data-p="'+it.go[0]+'" data-pr="'+esc(JSON.stringify(it.go[1]||{}))+'" ':'')+'cx="85" cy="85" r="54" stroke="'+cl[i%6]+'" style="stroke-dasharray:'+Math.max(len-2,0.1)+' '+(C-Math.max(len-2,0.1))+';stroke-dashoffset:'+(-off)+';animation-delay:'+(i*.12)+'s" transform="rotate(-90 85 85)"><title>'+esc(it.l)+': '+fmt0(it.v)+'</title></circle>';off+=len;return e}).join('');
+  return '<div class="dn"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="54" fill="none" stroke="var(--accbg)" stroke-width="22"/>'+seg+'<text class="ctl" x="85" y="80">Total</text><text class="ctr" x="85" y="98">'+(tot>=1e7?(tot/1e7).toFixed(2)+' Cr':tot>=1e5?(tot/1e5).toFixed(2)+' L':fmt0(tot))+'</text></svg><div class="lg">'+items.map((it,i)=>'<div><i style="background:'+cl[i%6]+'"></i>'+esc(it.l)+'<b>'+fmt0(it.v)+' <span class="mut">('+(100*it.v/tot).toFixed(0)+'%)</span></b></div>').join('')+'</div></div>'}
+function countUp(){document.querySelectorAll('.kpi .v,.gv').forEach(el=>{const m=el.textContent.trim().match(/^(-?)([\d,]+(?:\.\d+)?)(.*)$/);if(!m)return;
+  const end=parseFloat(m[2].replace(/,/g,'')),dec=(m[2].split('.')[1]||'').length,neg=m[1],suf=m[3];if(!isFinite(end)||end===0)return;const t0=performance.now(),D=800;
+  const step=t=>{const k=Math.min(1,(t-t0)/D),e=1-Math.pow(1-k,3),v=end*e;el.textContent=neg+v.toLocaleString('en-IN',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;if(k<1)requestAnimationFrame(step);else el.textContent=neg+m[2]+suf};requestAnimationFrame(step)})}
+function render(){const v=$('#view');try{PAGES[UI.page](v)}catch(e){v.innerHTML='<div class="card"><b>Error:</b> '+esc(e.message)+'</div>';console.error(e)}$('#main').scrollTop=0;countUp();const pg=$('#prog');pg.classList.remove('go');void pg.offsetWidth;pg.classList.add('go')}
+function bindF(pg,update){
+  $$('#view [data-f]').forEach(el=>{const k=el.dataset.f;const f=()=>{UI.f[pg][k]=el.type==='checkbox'?el.checked:el.value;update(k)};
+    el.addEventListener(el.type==='text'||el.tagName==='TEXTAREA'||!el.type?'input':'change',el.type==='text'?debounce(f,180):f)});
+}
+const inp=(pg,k,label,type,extra='')=>{const v=F(pg,k,'');return '<label class="f">'+label+'<input '+(type==='text'?'type="text"':'type="'+type+'"')+' data-f="'+k+'" value="'+esc(v)+'" '+extra+'></label>'};
+const sel=(pg,k,label,opts)=>{const v=F(pg,k,opts[0][0]);return '<label class="f">'+label+'<select data-f="'+k+'">'+opts.map(o=>'<option value="'+esc(o[0])+'" '+(o[0]===v?'selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select></label>'};
+const chk=(pg,k,label)=>'<label class="f chk"><input type="checkbox" data-f="'+k+'" '+(F(pg,k,false)?'checked':'')+'> '+label+'</label>';
+const nbc=(rep,cols)=>cols;
+const chips=a=>'<div class="chips">'+a.map(x=>'<div class="chip">'+x[0]+': <b>'+x[1]+'</b></div>').join('')+'</div>';
+
+/* ===== charts ===== */
+function barChart(data,series,h=220){
+  // data: [{l:'Apr',v:[a,b]}], series:[{n,c}]
+  const W=560,pl=52,pb=26,pt=10,pr=8,iw=W-pl-pr,ih=h-pb-pt;const mx=Math.max(1,...data.flatMap(d=>d.v));
+  const nice=(()=>{const p=Math.pow(10,Math.floor(Math.log10(mx)));const f=mx/p;return (f<=1?1:f<=2?2:f<=5?5:10)*p})();
+  const ax=v=>v>=1e7?(v/1e7).toFixed(v%1e7?1:0)+'Cr':v>=1e5?(v/1e5).toFixed(v%1e5?1:0)+'L':v>=1e3?(v/1e3)+'k':v;
+  let s='<svg class="svgc" viewBox="0 0 '+W+' '+h+'" width="100%" role="img">';
+  for(let i=0;i<=4;i++){const y=pt+ih-ih*i/4;s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'" stroke="var(--line)"/><text x="'+(pl-6)+'" y="'+(y+4)+'" text-anchor="end">'+ax(nice*i/4)+'</text>'}
+  const gw=iw/data.length,bw=Math.min(34,gw*.7/series.length);
+  data.forEach((d,i)=>{const x0=pl+gw*i+(gw-bw*series.length)/2;
+    d.v.forEach((v,j)=>{const bh=ih*v/nice;s+='<rect '+(d.go?'data-act="chart" data-p="'+d.go[0]+'" data-pr="'+esc(JSON.stringify(d.go[1]||{}))+'" ':'')+'x="'+(x0+j*bw)+'" y="'+(pt+ih-bh)+'" width="'+(bw-2)+'" height="'+bh+'" rx="3" fill="'+series[j].c+'"><title>'+d.l+' - '+series[j].n+': '+fmt0(v)+'</title></rect>'});
+    s+='<text x="'+(pl+gw*i+gw/2)+'" y="'+(h-8)+'" text-anchor="middle">'+d.l+'</text>'});
+  s+='</svg>';
+  if(series.length>1)s+='<div class="small mut" style="display:flex;gap:14px">'+series.map(x=>'<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:'+x.c+'"></span> '+x.n+'</span>').join('')+'</div>';
+  return s;
+}
+function hbars(items,cb){const mx=Math.max(1,...items.map(i=>Math.abs(i.v)));return items.map(i=>'<div class="hbar"><span class="lk" '+(cb?'data-act="ledger" data-k="'+esc(i.k)+'"':'')+' style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(i.l)+'">'+esc(i.l)+'</span><div class="tr"><div class="fl" style="width:'+(100*Math.abs(i.v)/mx)+'%"></div></div><span>'+fmt0(i.v)+'</span></div>').join('')}
+
+/* ===== PAGES ===== */
+const PAGES={};
+PAGES.dash=v=>{
+  const C=compute(UI.asOn),t=C.tot,S=DB.settings,L=bucketLabels();
+  const eff=(t.open+t.sales)?100*t.coll/(t.open+t.sales):0;
+  const months=[];let d=S.fyStart.slice(0,7);const endM=UI.asOn.slice(0,7);
+  while(d<=endM&&months.length<14){months.push(d);const y=+d.slice(0,4),m=+d.slice(5,7);d=m===12?(y+1)+'-01':y+'-'+pad(m+1)}
+  const ms={},mc={};DB.sales.forEach(s=>{if(s.date<=UI.asOn){const m=s.date.slice(0,7);ms[m]=(ms[m]||0)+s.value}});
+  DB.coll.forEach(c=>{if(c.date<=UI.asOn&&recIncluded(c)){const m=c.date.slice(0,7);mc[m]=(mc[m]||0)+c.value}});
+  const top=Object.values(C.P).filter(p=>p.net>EPS).sort((a,b)=>b.net-a.net).slice(0,10).map(p=>({k:p.k,l:p.name,v:p.net}));
+  const modes={};DB.coll.forEach(c=>{if(c.date<=UI.asOn&&recIncluded(c))modes[c.type]=(modes[c.type]||0)+c.value});
+  const np=Object.values(C.P).filter(p=>p.net>EPS).length,nadv=Object.values(C.P).filter(p=>p.net<-EPS).length;
+  v.innerHTML='<h1>Dashboard</h1><div class="sub">'+esc(DB.company)+' &middot; position as on <b>'+asOnLabel()+'</b></div>'+(()=>{const hr=new Date().getHours(),g=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening',td=r2(DB.coll.filter(c=>c.date===UI.asOn&&recIncluded(c)).reduce((a,c)=>a+c.value,0)),
+    wk=Object.values(C.P).reduce((n,p)=>n+p.bills.filter(b=>b.bal>EPS&&addDays(b.date,S.creditDays)>=UI.asOn&&addDays(b.date,S.creditDays)<=addDays(UI.asOn,7)).length,0),od=Object.values(C.P).filter(p=>p.overdue>EPS).length;
+    return '<div class="hero"><div class="ht"><small>'+g+'</small><h2>'+esc(DB.company)+'</h2><div class="hs"><span><b>'+fmt0(td)+'</b> collected on '+disp(UI.asOn)+'</span><span><b>'+wk+'</b> bills due in 7 days</span><span><b>'+od+'</b> parties overdue</span></div></div>'+
+    '<svg class="hw" viewBox="0 0 600 120" preserveAspectRatio="none"><path class="w1" d="M0 70 Q75 30 150 70 T300 70 T450 70 T600 70 V120 H0Z"/><path class="w2" d="M0 85 Q75 55 150 85 T300 85 T450 85 T600 85 V120 H0Z"/></svg><i class="fb f1"></i><i class="fb f2"></i><i class="fb f3"></i><i class="fb f4"></i></div>'})()+(sumDue()?'<div class="card due"><b>'+(lsGet('ea_sumfreq')==='daily'?'Daily':'Weekly')+' management summary is due.</b> <button class="btn sm" data-act="sumpdf">Download now</button></div>':'')+'<div class="bar"><button class="btn sec" data-act="sumpdf">⬇ Management Summary (PDF)</button><label class="f">Summary reminder<select data-act="sumfreq">'+[['off','Off'],['daily','Daily'],['weekly','Weekly']].map(o=>'<option value="'+o[0]+'" '+((lsGet('ea_sumfreq')||'off')===o[0]?'selected':'')+'>'+o[1]+'</option>').join('')+'</select></label></div>'+
+  '<div class="kpis">'+
+  [['Opening OS ('+S.openLabel+')',fmt0(t.open),Object.keys(DB.opening).length+' parties'],['Sales',fmt0(t.sales),DB.sales.filter(s=>s.date<=UI.asOn).length+' invoices',months.map(m=>ms[m]||0),'var(--c1)'],['Collection',fmt0(t.coll),DB.coll.length+' receipts',months.map(m=>mc[m]||0),'var(--c2)'],['Closing Outstanding',fmt0(t.net),np+' debtors',(()=>{let r=t.open;return months.map(m=>r+=(ms[m]||0)-(mc[m]||0))})(),'var(--c4)'],['Overdue (> '+S.creditDays+' days)',fmt0(t.overdue),t.net?(100*t.overdue/Math.max(t.net+t.adv,1)).toFixed(1)+'% of receivables':''],['Collection Efficiency',eff.toFixed(1)+'%','of Opening + Sales'],['Advance / Credit',fmt0(t.adv),nadv+' parties with credit']].map(k=>'<div class="kpi"><div class="l">'+k[0]+'</div><div class="v">'+k[1]+'</div><div class="s">'+k[2]+'</div>'+(k[3]?spark(k[3],k[4]):'')+'</div>').join('')+'</div>'+
+  (()=>{const dp=Object.values(C.P).filter(p=>p.net>EPS),odp=dp.filter(p=>p.overdue>EPS).length;return '<div class="card gauges"><h2>Collection health</h2><div class="gr">'+ring('Collection efficiency',eff,'var(--c1)','of opening + sales')+ring('Overdue share',t.net?100*t.overdue/Math.max(t.net+t.adv,1):0,'var(--c4)','of receivables')+ring('Debtors on time',dp.length?100*(dp.length-odp)/dp.length:100,'var(--c3)',(dp.length-odp)+' of '+dp.length+' parties')+'</div></div>'})()+'<div class="grid2"><div class="card"><h2>Outstanding by age</h2>'+barChart(L.map((l,i)=>({l:l+'d',v:[Math.max(0,t.b[i])],go:['bills',{age:i?S.buckets[i-1]+1:0,od:false,q:''}]})),[{n:'Outstanding',c:'var(--c1)'}])+'</div>'+
+  '<div class="card"><h2>Monthly sales vs collection</h2>'+barChart(months.map(m=>({l:MON[+m.slice(5)-1].slice(0,1)+MON[+m.slice(5)-1].slice(1).toLowerCase()+"'"+m.slice(2,4),v:[ms[m]||0,mc[m]||0],go:['msum',{from:m+'-01',to:addDays(addDays(m+'-28',5).slice(0,7)+'-01',-1)}]})),[{n:'Sales',c:'var(--c1)'},{n:'Collection',c:'var(--c2)'}])+'</div></div>'+
+  '<div class="grid2"><div class="card"><h2>Top 10 debtors</h2>'+(top.length?hbars(top,true):'<span class="mut">No outstanding</span>')+'</div>'+
+  '<div class="card"><h2>Collection by mode</h2>'+(Object.keys(modes).length?donut(Object.entries(modes).map(([k,v])=>({l:k,v,go:['coll',{ty:k,from:'',to:'',q:'',st:''}]})).sort((a,b)=>b.v-a.v)):'<span class="mut">No collections loaded yet. Go to Import / Export to upload your collection file.</span>')+
+  '<h2 style="margin-top:16px">Data status</h2><div class="small mut">Sales loaded up to '+(DB.sales.length?disp(DB.sales.reduce((a,s)=>s.date>a?s.date:a,'0')):'-')+' &middot; Collections up to '+(DB.coll.length?disp(DB.coll.reduce((a,s)=>s.date>a?s.date:a,'0')):'-')+' &middot; Parties '+Object.keys(DB.parties).length+'</div></div></div>';
+};
+
+function osRows(){
+  const C=compute(UI.asOn),q=nk(F('os','q','')),mode=F('os','mode','nz'),min=+F('os','min',0)||0,od=F('os','od',false);
+  return Object.values(C.P).filter(p=>{
+    if(q&&!nk(p.name).includes(q))return false;
+    if(mode==='nz'&&Math.abs(p.net)<=EPS)return false;if(mode==='dr'&&p.net<=EPS)return false;if(mode==='cr'&&p.net>=-EPS)return false;if(mode==='zero'&&Math.abs(p.net)>EPS)return false;
+    if(min&&Math.abs(p.net)<min)return false;if(od&&p.overdue<=EPS)return false;return true});
+}
+const partyCol=()=>({t:'Party',get:r=>r.name,wrap:true,html:r=>'<a class="lk" data-act="ledger" data-k="'+esc(r.k)+'">'+esc(r.name)+'</a>'});
+PAGES.os=v=>{
+  v.innerHTML='<h1>Outstanding Report - Party-wise</h1><div class="sub">Collections adjusted invoice-wise (against-invoice references first, then oldest-first). As on '+asOnLabel()+'.</div>'+
+  '<div class="bar">'+inp('os','q','Search party','text','placeholder="type name..."')+sel('os','mode','Show',[['nz','Outstanding (non-zero)'],['dr','Debit balances'],['cr','Credit / advance'],['zero','Zero balance'],['all','All parties']])+inp('os','min','Min. amount','number','style="width:110px"')+chk('os','od','Overdue only')+
+  '<span style="flex:1"></span><span id="osx"></span></div><div id="oschips"></div>'+repHost('os');
+  const upd=()=>{
+    const rows=osRows();
+    const rep={title:'Outstanding Report - Party-wise',sub:'As on '+asOnLabel()+' | '+rows.length+' parties',file:'Outstanding_PartyWise',sheet:'Outstanding',rows,cols:[
+      {t:'#',get:(r)=>0,html:(r,i)=>i+1,type:'t',cls:'mut'},partyCol(),
+      {t:'Opening B/F',get:r=>r.open,type:'n',tot:true,dash:true},{t:'Sales',get:r=>r.sales,type:'n',tot:true,dash:true},{t:'Collection',get:r=>r.coll+r.cn,type:'n',tot:true,dash:true},
+      {t:'Net Outstanding',get:r=>r.net,type:'n',tot:true,html:r=>'<b>'+fmt(r.net)+'</b>'},{t:'Overdue (>'+DB.settings.creditDays+'d)',get:r=>r.overdue,type:'n',tot:true,dash:true},
+      {t:'Last Receipt',get:r=>r.last,type:'d'},{t:'Oldest Bill (days)',get:r=>r.oldestDays,type:'n',int:true}]};
+    rep.cols[0].get=(r)=>null;
+    repView('os',rep);
+    const tot=r2(rows.reduce((a,r)=>a+r.net,0));
+    $('#oschips').innerHTML=chips([['Parties',rows.length],['Net outstanding',fmt(tot)],['Overdue',fmt(rows.reduce((a,r)=>a+r.overdue,0))]]);
+    $('#osx').innerHTML=exBtns('os')+' <button class="btn" data-act="stmts">⬇ Party Statements PDF (all listed)</button>';
+  };
+  bindF('os',upd);upd();
+};
+PAGES.aging=v=>{
+  const tab=UI.tab.aging||'party';
+  v.innerHTML='<h1>Outstanding Aging Report</h1><div class="sub">Aged by invoice date as on '+asOnLabel()+'. Buckets are configurable in Settings.</div>'+
+  '<div class="tabs"><a data-act="tab" data-pg="aging" data-t="party" class="'+(tab==='party'?'on':'')+'">Party-wise aging</a><a data-act="tab" data-pg="aging" data-t="bill" class="'+(tab==='bill'?'on':'')+'">Bill-wise (invoice) outstanding</a></div>'+
+  '<div class="bar">'+inp('aging','q','Search party / invoice','text')+(tab==='party'?sel('aging','mode','Show',[['dr','Debit balances'],['nz','All non-zero'],['all','All']]):chk('aging','settled','Include settled bills')+sel('aging','bk','Age bucket',[['','All'],...bucketLabels().map((l,i)=>[String(i),l+' days'])]))+inp('aging','min','Min. amount','number','style="width:110px"')+'<span style="flex:1"></span>'+'<span id="agx"></span></div>'+repHost('aging');
+  const L=bucketLabels();
+  const upd=()=>{
+    const C=compute(UI.asOn),q=nk(F('aging','q','')),min=+F('aging','min',0)||0;let rep;
+    if(tab==='party'){const mode=F('aging','mode','dr');
+      const rows=Object.values(C.P).filter(p=>{if(q&&!nk(p.name).includes(q))return false;if(mode==='dr'&&p.net<=EPS)return false;if(mode==='nz'&&Math.abs(p.net)<=EPS)return false;if(min&&Math.abs(p.net)<min)return false;return !(mode==='all'?false:false)});
+      rep={title:'Outstanding Aging Report - Party-wise',sub:'As on '+asOnLabel()+' | Aged by invoice date | '+rows.length+' parties',file:'Aging_PartyWise',sheet:'Aging',rows,cols:[{t:'#',get:()=>null,html:(r,i)=>i+1,cls:'mut'},partyCol(),
+        ...L.map((l,i)=>({t:l+' d',get:r=>r.b[i],type:'n',tot:true,dash:true})),{t:'Advance / On A/c',get:r=>r.adv?-r.adv:0,type:'n',tot:true,dash:true},{t:'Net Outstanding',get:r=>r.net,type:'n',tot:true,html:r=>'<b>'+fmt(r.net)+'</b>'}]};
+    }else{
+      const rows=[],bk=F('aging','bk','');
+      for(const p of Object.values(C.P)){for(const b of p.bills){if(!F('aging','settled',false)&&b.bal<=EPS)continue;
+        if(bk!==''&&b.bkt!==+bk)continue;if(q&&!(nk(p.name).includes(q)||ik(b.inv).includes(ik(q))))continue;if(min&&b.bal<min)continue;rows.push({p,b})}}
+      rep={title:'Bill-wise Outstanding (Invoice-wise)',sub:'As on '+asOnLabel()+' | '+rows.length+' bills',file:'Outstanding_BillWise',sheet:'Bill-wise',rows,cols:[{t:'Party',get:r=>r.p.name,wrap:true,html:r=>'<a class="lk" data-act="ledger" data-k="'+esc(r.p.k)+'">'+esc(r.p.name)+'</a>'},
+        {t:'Invoice No.',get:r=>r.b.inv},{t:'Inv. Date',get:r=>r.b.date,type:'d'},{t:'Bill Amount',get:r=>r.b.amt,type:'n',tot:true},{t:'Received',get:r=>r2(r.b.amt-r.b.bal),type:'n',tot:true},{t:'Balance',get:r=>r.b.bal,type:'n',tot:true,html:r=>'<b>'+fmt(r.b.bal)+'</b>'},
+        {t:'Days',get:r=>r.b.days,type:'n',int:true},{t:'Age Bucket',get:r=>r.b.bkt>=0?L[r.b.bkt]+' d':'Settled'},
+        {t:'Status',get:r=>r.b.bal<=EPS?'Settled':r.b.days>DB.settings.creditDays?'Overdue':'Within credit',html:r=>r.b.bal<=EPS?'<span class="pill ok">Settled</span>':r.b.days>DB.settings.creditDays?'<span class="pill bad">Overdue</span>':'<span class="pill warn">Within credit</span>'}]};
+    }
+    repView('aging',rep);$('#agx').innerHTML=exBtns('aging');
+  };
+  bindF('aging',upd);upd();
+};
+PAGES.ledger=v=>{
+  const S=DB.settings,tab=UI.tab.ledger||'led';
+  const from=F('ledger','from',S.fyStart),to=F('ledger','to',UI.asOn);
+  v.innerHTML='<h1>Party Ledger</h1><div class="sub">Date-wise ledger with running balance and invoice-wise adjustment of receipts.</div>'+
+  '<div class="bar"><label class="f">Party<input id="lp" type="text" style="width:320px" placeholder="type party name..." value="'+esc(F('ledger','k','')?pname(F('ledger','k','')):'')+'"></label>'+inp('ledger','from','From','date')+inp('ledger','to','To','date')+'<span style="flex:1"></span><span id="lx"></span></div>'+
+  '<div id="lsum"></div><div class="tabs"><a data-act="tab" data-pg="ledger" data-t="led" class="'+(tab==='led'?'on':'')+'">Ledger</a><a data-act="tab" data-pg="ledger" data-t="bill" class="'+(tab==='bill'?'on':'')+'">Bill-wise adjustment</a></div>'+repHost('ledger');
+  const lp=$('#lp');partyPicker(lp,k=>{UI.f.ledger.k=k;upd()});
+  const upd=()=>{
+    const k=UI.f.ledger.k;if(!k||!DB.parties[k]){$('#lsum').innerHTML='<div class="card mut">Select a party to view the ledger.</div>';$('#rep-ledger').innerHTML='';$('#lx').innerHTML='';return}
+    const f=UI.f.ledger.from||S.fyStart,t=UI.f.ledger.to||UI.asOn;
+    const L=buildLedger(k,f,t),C=compute(t),p=C.P[k];
+    $('#lsum').innerHTML='<div class="kpis"><div class="kpi"><div class="l">Opening ('+disp(f)+')</div><div class="v '+sc(L.open)+'">'+fmt(L.open)+'</div></div><div class="kpi"><div class="l">Debits (Sales)</div><div class="v">'+fmt(L.dr)+'</div></div><div class="kpi"><div class="l">Credits (Receipts)</div><div class="v">'+fmt(L.cr)+'</div></div><div class="kpi"><div class="l">Closing Balance</div><div class="v '+sc(L.close)+'">'+fmt(L.close)+(L.close<-EPS?' Cr':L.close>EPS?' Dr':'')+'</div></div><div class="kpi"><div class="l">Overdue (>'+S.creditDays+'d)</div><div class="v">'+fmt(p?p.overdue:0)+'</div><div class="s">Oldest bill: '+(p&&p.oldestDays!=null?p.oldestDays+' days':'-')+'</div></div></div>';
+    let rep;
+    if(tab==='led'){
+      rep={title:'Ledger - '+pname(k),sub:'Period '+disp(f)+' to '+disp(t),file:'Ledger_'+pname(k).replace(/[^A-Za-z0-9]+/g,'_').slice(0,30),sheet:'Ledger',rows:L.rows,totals:false,cols:[{t:'Date',get:r=>r.date,type:'d'},{t:'Particulars',get:r=>r.part,wrap:true},{t:'Reference',get:r=>r.ref,wrap:true},{t:'Debit',get:r=>r.dr||null,type:'n'},{t:'Credit',get:r=>r.cr||null,type:'n'},
+        {t:'Balance',get:r=>r.bal,type:'n',html:r=>fmt(Math.abs(r.bal))+(r.bal<-EPS?' Cr':r.bal>EPS?' Dr':''),cls:''}]};
+      rep.cols.forEach(c=>c.sortOff=true);
+      rep._fixed=true;
+    }else{
+      const rows=p?p.bills.filter(b=>b.date<=t):[];
+      rep={title:'Bill-wise Adjustment - '+pname(k),sub:'As on '+disp(t),file:'BillWise_'+pname(k).replace(/[^A-Za-z0-9]+/g,'_').slice(0,30),sheet:'Bills',rows,cols:[{t:'Invoice No.',get:b=>b.inv},{t:'Inv. Date',get:b=>b.date,type:'d'},{t:'Amount',get:b=>b.amt,type:'n',tot:true},{t:'Received',get:b=>r2(b.amt-b.bal),type:'n',tot:true},{t:'Balance',get:b=>b.bal,type:'n',tot:true},
+        {t:'Days',get:b=>b.days,type:'n',int:true},{t:'Adjusted by (receipts)',get:b=>b.alloc.map(a=>disp(a.rec.date)+' '+a.rec.type+(a.rec.cn?'':'')+' '+fmt(a.amt)+(a.ph===1?'':a.ph===2?' (FIFO)':' (on a/c)')).join('; '),wrap:true}]};
+    }
+    repView('ledger',rep);
+    if(tab==='led'){UI.ts.ledger.sort=null}
+    $('#lx').innerHTML=exBtns('ledger')+' <button class="btn" data-act="stmt1" data-k="'+esc(k)+'">⬇ Statement PDF</button>';
+  };
+  bindF('ledger',upd);upd();
+};
+/* sales register */
+PAGES.sales=v=>{
+  const S=DB.settings;
+  v.innerHTML='<h1>Sales Register</h1><div class="sub">All sales invoices with live settlement status.</div><div class="bar">'+inp('sales','q','Search party / invoice','text')+inp('sales','from','From','date')+inp('sales','to','To','date')+sel('sales','st','Status',[['','All'],['open','Open (balance due)'],['paid','Settled']])+'<span style="flex:1"></span><button class="btn" data-act="addsale">+ Add Sale</button><span id="sx"></span></div><div id="schips"></div>'+repHost('sales');
+  const upd=()=>{
+    const C=compute(UI.asOn),q=nk(F('sales','q','')),qi=ik(F('sales','q','')),f=F('sales','from',''),t=F('sales','to',''),st=F('sales','st','');
+    const rows=DB.sales.filter(s=>{if(s.date>UI.asOn)return false;if(f&&s.date<f)return false;if(t&&s.date>t)return false;
+      if(q&&!(nk(pname(s.k)).includes(q)||ik(s.inv).includes(qi)))return false;
+      if(st){const b=C.billByInv[ik(s.inv)];const bal=b?b.bal:0;if(st==='open'&&bal<=EPS)return false;if(st==='paid'&&bal>EPS)return false}return true});
+    const rep={title:'Sales Register',sub:(f||t?disp(f||S.fyStart)+' to '+disp(t||UI.asOn):'As on '+asOnLabel())+' | '+rows.length+' invoices',file:'Sales_Register',sheet:'Sales',rows,cols:[
+      {t:'Date',get:s=>s.date,type:'d'},{t:'Party',get:s=>pname(s.k),wrap:true,html:s=>'<a class="lk" data-act="ledger" data-k="'+esc(s.k)+'">'+esc(pname(s.k))+'</a>'},{t:'Invoice No.',get:s=>s.inv},{t:'Value',get:s=>s.value,type:'n',tot:true},
+      {t:'Balance',get:s=>{const b=C.billByInv[ik(s.inv)];return b?b.bal:null},type:'n',tot:true},
+      {t:'Status',get:s=>{const b=C.billByInv[ik(s.inv)];return !b?'':b.bal<=EPS?'Settled':b.bal<b.amt-EPS?'Part paid':'Open'},html:s=>{const b=C.billByInv[ik(s.inv)];return !b?'':b.bal<=EPS?'<span class="pill ok">Settled</span>':b.bal<b.amt-EPS?'<span class="pill warn">Part paid</span>':'<span class="pill bad">Open</span>'}},
+      {t:'',get:()=>null,sortOff:true,noex:true,html:s=>'<a class="lk" data-act="editsale" data-id="'+s.id+'">Edit</a> · <a class="lk" data-act="delsale" data-id="'+s.id+'">Del</a>'}]};
+    repView('sales',rep);
+    $('#schips').innerHTML=chips([['Invoices',rows.length],['Value',fmt(rows.reduce((a,s)=>a+s.value,0))]]);$('#sx').innerHTML=exBtns('sales');
+  };
+  bindF('sales',upd);upd();
+};
+PAGES.coll=v=>{
+  v.innerHTML='<h1>Collection Register</h1><div class="sub">Receipts with the invoices they were adjusted against.</div><div class="bar">'+inp('coll','q','Search party / receipt / ref','text')+inp('coll','from','From','date')+inp('coll','to','To','date')+sel('coll','ty','Mode',[['','All'],...TYPES.map(t=>[t,t])])+sel('coll','st','Adjustment',[['','All'],['adv','Has unadjusted advance'],['bad','Invoice ref not found']])+'<span style="flex:1"></span><button class="btn" data-act="addcoll">+ Add Collection</button><span id="cx"></span></div><div id="cchips"></div>'+repHost('coll');
+  const upd=()=>{
+    const C=compute(UI.asOn),q=nk(F('coll','q','')),f=F('coll','from',''),t=F('coll','to',''),ty=F('coll','ty',''),st=F('coll','st','');
+    const rows=DB.coll.filter(c=>{if(c.date>UI.asOn)return false;if(f&&c.date<f)return false;if(t&&c.date>t)return false;if(ty&&c.type!==ty)return false;
+      if(q&&!(nk(pname(c.k)).includes(q)||nk(c.receipt).includes(q)||nk(c.refNo).includes(q)||nk(c.inv).includes(q)))return false;
+      const ri=C.recInfo[c.id];if(st==='adv'&&!(ri&&ri.advance>EPS))return false;if(st==='bad'&&!(ri&&ri.bad&&ri.bad.length))return false;return true});
+    const by={};rows.filter(recIncluded).forEach(c=>by[c.type]=(by[c.type]||0)+c.value);
+    const rep={title:'Collection Register',sub:(f||t?disp(f||DB.settings.fyStart)+' to '+disp(t||UI.asOn):'As on '+asOnLabel())+' | '+rows.length+' receipts',file:'Collection_Register',sheet:'Collections',rows,cols:[
+      {t:'Date',get:c=>c.date,type:'d'},{t:'Mode',get:c=>c.type},{t:'Party',get:c=>pname(c.k),wrap:true,html:c=>'<a class="lk" data-act="ledger" data-k="'+esc(c.k)+'">'+esc(pname(c.k))+'</a>'},{t:'Ref No.',get:c=>c.refNo},{t:'Ref Date',get:c=>c.refDate,type:'d'},{t:'Value',get:c=>c.value,type:'n',tot:true},{t:'Receipt No.',get:c=>c.receipt},{t:'Against Inv.',get:c=>c.inv},
+      {t:'Adjusted',get:c=>{const r=C.recInfo[c.id];return r?r2(c.value-(r.advance||0)):null},type:'n',tot:true},
+      {t:'Status',get:c=>{if(c.type==='CHQ'&&c.status&&c.status!=='CLEARED')return c.status;const r=C.recInfo[c.id];return r&&r.advance>EPS?'Advance':r&&r.bad&&r.bad.length?'Ref not found':'Adjusted'},
+        html:c=>{if(c.type==='CHQ'&&c.status&&c.status!=='CLEARED')return '<span class="pill '+(c.status==='BOUNCED'?'bad':'warn')+'">'+c.status+'</span>';const r=C.recInfo[c.id];return r&&r.advance>EPS?'<span class="pill warn">Advance '+fmt(r.advance)+'</span>':r&&r.bad&&r.bad.length?'<span class="pill warn">Ref not found</span>':'<span class="pill ok">Adjusted</span>'}},
+      {t:'',get:()=>null,sortOff:true,html:c=>'<a class="lk" data-act="rcpt" data-id="'+c.id+'">Voucher</a> · <a class="lk" data-act="editcoll" data-id="'+c.id+'">Edit</a> · <a class="lk" data-act="delcoll" data-id="'+c.id+'">Del</a>'}]};
+    repView('coll',rep);
+    $('#cchips').innerHTML=chips([['Receipts',rows.length],['Total',fmt(rows.filter(recIncluded).reduce((a,c)=>a+c.value,0))],...TYPES.filter(t=>by[t]).map(t=>[t,fmt(by[t])])]);$('#cx').innerHTML=exBtns('coll')+' <button class="btn" data-act="vall">🧾 Vouchers PDF (listed)</button>';
+  };
+  bindF('coll',upd);upd();
+};
+/* exceptions */
+PAGES.exc=v=>{
+  const tab=UI.tab.exc||'ref',C=compute(UI.asOn),P=Object.values(C.P);
+  v.innerHTML='<h1>Exceptions & Audit</h1><div class="sub">Items that need your attention - fix them in the registers or Party Master.</div><div class="tabs">'+[['ref','Invoice ref not found'],['adv','Advance / credit balances'],['chq','Pending / bounced cheques'],['canc','Cancelled invoices'],['noop','Parties with no activity'],['log','Import log']].map(t=>'<a data-act="tab" data-pg="exc" data-t="'+t[0]+'" class="'+(tab===t[0]?'on':'')+'">'+t[1]+'</a>').join('')+'</div><div class="bar"><span style="flex:1"></span><span id="ex"></span></div>'+repHost('exc');
+  let rep;
+  if(tab==='ref'){const rows=[];P.forEach(p=>p.unmatched.forEach(r=>rows.push({p,r})));
+    rep={title:'Receipts with invoice reference not found',sub:'Adjusted oldest-first instead | As on '+asOnLabel(),file:'Exceptions_InvoiceRef',rows,cols:[{t:'Date',get:x=>x.r.date,type:'d'},{t:'Party',get:x=>x.p.name,wrap:true,html:x=>'<a class="lk" data-act="ledger" data-k="'+esc(x.p.k)+'">'+esc(x.p.name)+'</a>'},{t:'Mode',get:x=>x.r.type},{t:'Value',get:x=>x.r.value,type:'n',tot:true},{t:'Against Inv. (entered)',get:x=>x.r.inv},{t:'Not found',get:x=>x.r.bad.join(', ')}]}}
+  else if(tab==='adv'){const rows=P.filter(p=>p.adv>EPS);
+    rep={title:'Advance / credit balances',sub:'Receipts in excess of outstanding bills | As on '+asOnLabel(),file:'Exceptions_Advance',rows,cols:[partyCol(),{t:'Opening',get:p=>p.open,type:'n',tot:true},{t:'Sales',get:p=>p.sales,type:'n',tot:true},{t:'Collection',get:p=>p.coll+p.cn,type:'n',tot:true},{t:'Advance (unadjusted)',get:p=>p.adv,type:'n',tot:true},{t:'Net Balance',get:p=>p.net,type:'n',tot:true}]}}
+  else if(tab==='chq'){const rows=DB.coll.filter(c=>c.type==='CHQ'&&c.status&&c.status!=='CLEARED'&&c.date<=UI.asOn);
+    rep={title:'Pending / bounced cheques',sub:'Change status from Collection Register > Edit',file:'Exceptions_Cheques',rows,cols:[{t:'Date',get:c=>c.date,type:'d'},{t:'Party',get:c=>pname(c.k),wrap:true},{t:'Chq No.',get:c=>c.refNo},{t:'Chq Date',get:c=>c.refDate,type:'d'},{t:'Value',get:c=>c.value,type:'n',tot:true},{t:'Status',get:c=>c.status}]}}
+  else if(tab==='canc'){const rows=DB.cancelled;rep={title:'Cancelled invoices',sub:'Invoices marked (cancelled) in sales data | '+rows.length,file:'Cancelled_Invoices',rows,cols:[{t:'Date',get:c=>c.date,type:'d'},{t:'Invoice No.',get:c=>c.inv}]}}
+  else if(tab==='noop'){const rows=P.filter(p=>!p.open&&!p.sales&&!p.coll);rep={title:'Parties with no activity',sub:'No opening balance, sales or collection',file:'Parties_NoActivity',rows,cols:[{t:'Party',get:p=>p.name}]}}
+  else{const rows=DB.log;rep={title:'Import log',sub:'',file:'Import_Log',rows,totals:false,cols:[{t:'When',get:l=>l.at.replace('T',' ').slice(0,16)},{t:'Action',get:l=>l.kind},{t:'Note',get:l=>l.note},{t:'Added',get:l=>l.added,type:'n',html:l=>l.added},{t:'Duplicates skipped',get:l=>l.dups,type:'n',html:l=>l.dups},{t:'Rejected rows',get:l=>l.issues,type:'n',html:l=>l.issues},{t:'New parties',get:l=>l.created,type:'n',html:l=>l.created||0},{t:'Value',get:l=>l.total,type:'n'}]}}
+  repView('exc',rep);$('#ex').innerHTML=exBtns('exc');
+};
+/* party master */
+PAGES.parties=v=>{
+  v.innerHTML='<h1>Party Master</h1><div class="sub">Rename, merge duplicate names, correct opening balances. Merging keeps all sales, receipts and balances together.</div><div class="bar">'+inp('parties','q','Search','text')+sel('parties','f','Filter',[['','All parties'],['noopen','No opening balance (new this year)'],['open','With opening balance']])+'<span style="flex:1"></span><button class="btn sec" data-act="dups">Find possible duplicates</button><button class="btn" data-act="addparty">+ Add Party</button><span id="px"></span></div>'+repHost('parties');
+  const upd=()=>{
+    const C=compute(UI.asOn),q=nk(F('parties','q','')),f=F('parties','f','');
+    const rows=Object.values(C.P).filter(p=>(!q||nk(p.name).includes(q))&&(f===''||(f==='noopen'?!DB.opening[p.k]:!!DB.opening[p.k])));
+    const rep={title:'Party Master',sub:rows.length+' parties',file:'Party_Master',rows,cols:[{t:'Party',get:p=>p.name,wrap:true,html:p=>'<a class="lk" data-act="ledger" data-k="'+esc(p.k)+'">'+esc(p.name)+'</a>'},{t:'Opening',get:p=>DB.opening[p.k]||0,type:'n',tot:true},{t:'Sales',get:p=>p.sales,type:'n',tot:true},{t:'Collection',get:p=>p.coll+p.cn,type:'n',tot:true},{t:'Balance',get:p=>p.net,type:'n',tot:true},{t:'',get:()=>null,sortOff:true,html:p=>'<a class="lk" data-act="editparty" data-k="'+esc(p.k)+'">Edit</a> · <a class="lk" data-act="mergeparty" data-k="'+esc(p.k)+'">Merge</a> · <a class="lk" data-act="delparty" data-k="'+esc(p.k)+'">Del</a>'}]};
+    repView('parties',rep);$('#px').innerHTML=exBtns('parties');
+  };
+  bindF('parties',upd);upd();
+};
+
+/* ===== additional reports ===== */
+const pLink=(k,n)=>'<a class="lk" data-act="ledger" data-k="'+esc(k)+'">'+esc(n)+'</a>';
+const num0=(t,g,o={})=>Object.assign({t,get:g,type:'n',tot:true,dash:true},o);
+function repPage(id,title,subtxt,filters,build,xb){
+  UI.f[id]=UI.f[id]||{};
+  PAGES[id]=v=>{UI.f[id]=UI.f[id]||{};
+    v.innerHTML='<h1>'+title+'</h1><div class="sub">'+subtxt+'</div><div class="bar">'+filters()+'<span style="flex:1"></span><span id="x-'+id+'"></span></div><div id="c-'+id+'"></div>'+repHost(id);
+    const upd=()=>{const r=build();$('#c-'+id).innerHTML=r.chips?chips(r.chips):'';repView(id,r.rep);$('#x-'+id).innerHTML=exBtns(id)};
+    bindF(id,upd);upd()}}
+const fromTo=id=>()=>inp(id,'from','From','date')+inp(id,'to','To','date');
+const inRange=(id,d)=>{const f=F(id,'from',DB.settings.fyStart),t=F(id,'to',UI.asOn);return d>=f&&d<=t};
+const rangeSub=id=>disp(F(id,'from',DB.settings.fyStart))+' to '+disp(F(id,'to',UI.asOn));
+
+repPage('overdue','Overdue Follow-up','Parties with overdue balances beyond the credit period - sorted by amount, for collection calls.',
+  ()=>inp('overdue','min','Min overdue amount','number','step="1000" placeholder="0"')+sel('overdue','sort','Sort by',[['od','Overdue amount'],['days','Oldest bill (days)'],['quiet','Days since last receipt']]),
+  ()=>{const m=+F('overdue','min',0)||0,so=F('overdue','sort','od');
+    const rows=osRows().filter(r=>r.overdue>m+EPS).map(r=>Object.assign({},r,{quiet:r.last?dayDiff(r.last,UI.asOn):null}));
+    rows.sort((a,b)=>so==='days'?(b.oldestDays||0)-(a.oldestDays||0):so==='quiet'?(b.quiet==null?9e9:b.quiet)-(a.quiet==null?9e9:a.quiet):b.overdue-a.overdue);
+    const tot=r2(rows.reduce((a,r)=>a+r.overdue,0));
+    return {chips:[['Parties overdue',rows.length],['Total overdue',fmt(tot)],['Credit days',DB.settings.creditDays]],
+    rep:{title:'Overdue Follow-up',sub:'As on '+asOnLabel()+' | overdue > '+DB.settings.creditDays+' days | '+rows.length+' parties',file:'Overdue_FollowUp',sheet:'Overdue',rows,cols:[
+      {t:'#',get:()=>null,html:(r,i)=>i+1,cls:'mut'},{t:'Party',get:r=>r.name,wrap:true,html:r=>pLink(r.k,r.name)},
+      num0('Net Outstanding',r=>r.net),num0('Overdue',r=>r.overdue,{html:r=>'<b class="neg">'+fmt(r.overdue)+'</b>'}),
+      {t:'Overdue %',get:r=>r.net>0?100*r.overdue/r.net:null,type:'n',tot:false,html:r=>r.net>0?(100*r.overdue/r.net).toFixed(0)+'%':''},
+      {t:'Oldest Bill (days)',get:r=>r.oldestDays,type:'n',int:true},{t:'Last Receipt',get:r=>r.last,type:'d'},
+      {t:'Days Since Receipt',get:r=>r.quiet,type:'n',int:true,html:r=>r.quiet==null?'<span class="pill bad">Never</span>':'<span class="pill '+(r.quiet>60?'bad':r.quiet>30?'warn':'ok')+'">'+r.quiet+'</span>'}]}}});
+
+repPage('msum','Monthly Summary','Month-wise sales, credit notes, collections and net movement for the selected period.',fromTo('msum'),
+  ()=>{const M={};const add=(d,k,v)=>{const m=d.slice(0,7);(M[m]=M[m]||{m,inv:0,sales:0,cn:0,coll:0,rc:0})[k]+=v};
+    DB.sales.forEach(s=>{if(!inRange('msum',s.date))return;if(s.value>=0){add(s.date,'sales',s.value);add(s.date,'inv',1)}else add(s.date,'cn',-s.value)});
+    DB.coll.forEach(c=>{if(inRange('msum',c.date)&&recIncluded(c)){add(c.date,'coll',c.value);add(c.date,'rc',1)}});
+    const rows=Object.values(M).sort((a,b)=>a.m<b.m?-1:1);rows.forEach(r=>{r.net=r.sales-r.cn-r.coll;r.eff=r.sales?100*r.coll/r.sales:null;r.name=MON[+r.m.slice(5)-1]+' '+r.m.slice(0,4)});
+    const T=k=>r2(rows.reduce((a,r)=>a+r[k],0));
+    return {chips:[['Sales',fmt(T('sales'))],['Collection',fmt(T('coll'))],['Net movement',fmt(T('net'))]],
+    rep:{title:'Monthly Summary',sub:rangeSub('msum')+' | '+rows.length+' months',file:'Monthly_Summary',sheet:'Monthly',rows,cols:[
+      {t:'Month',get:r=>r.m,html:r=>r.name},num0('Invoices',r=>r.inv,{int:true}),num0('Sales',r=>r.sales),num0('Credit Notes',r=>r.cn),num0('Receipts',r=>r.rc,{int:true}),num0('Collection',r=>r.coll),
+      num0('Net Movement',r=>r.net,{html:r=>'<b>'+fmt(r.net)+'</b>'}),{t:'Collection % of Sales',get:r=>r.eff,type:'n',tot:false,html:r=>r.eff==null?'':r.eff.toFixed(1)+'%'}]}}});
+
+repPage('topp','Top Parties','Rank parties by sales or collection in a period - find your key accounts and your slow payers.',
+  ()=>fromTo('topp')()+sel('topp','by','Rank by',[['sales','Sales'],['coll','Collection'],['net','Sales - Collection gap']])+inp('topp','n','Show top','number','style="width:80px" placeholder="50"'),
+  ()=>{const P={};const g=k=>P[k]||(P[k]={k,name:pname(k),sales:0,coll:0,inv:0,rc:0});
+    DB.sales.forEach(s=>{if(inRange('topp',s.date)&&DB.parties[s.k]){const p=g(s.k);if(s.value>=0){p.sales+=s.value;p.inv++}else p.sales+=s.value}});
+    DB.coll.forEach(c=>{if(inRange('topp',c.date)&&recIncluded(c)&&DB.parties[c.k]){const p=g(c.k);p.coll+=c.value;p.rc++}});
+    const by=F('topp','by','sales'),n=+F('topp','n',50)||50;let rows=Object.values(P);rows.forEach(r=>r.gap=r.sales-r.coll);
+    rows.sort((a,b)=>b[by]-a[by]);rows=rows.slice(0,n);const ts=rows.reduce((a,r)=>a+r.sales,0)||1,k=by;
+    let cum=0;rows.forEach(r=>{cum+=r.sales;r.share=100*r.sales/ts;r.cum=100*cum/ts});
+    return {chips:[['Parties shown',rows.length],['Sales',fmt(rows.reduce((a,r)=>a+r.sales,0))],['Collection',fmt(rows.reduce((a,r)=>a+r.coll,0))]],
+    rep:{title:'Top Parties',sub:rangeSub('topp')+' | by '+k,file:'Top_Parties',sheet:'Top Parties',rows,cols:[
+      {t:'#',get:()=>null,html:(r,i)=>i+1,cls:'mut'},{t:'Party',get:r=>r.name,wrap:true,html:r=>pLink(r.k,r.name)},num0('Invoices',r=>r.inv,{int:true}),num0('Sales',r=>r.sales),num0('Receipts',r=>r.rc,{int:true}),num0('Collection',r=>r.coll),num0('Gap (Sales - Coll.)',r=>r.gap),
+      {t:'Share of Sales',get:r=>r.share,type:'n',tot:false,html:r=>'<div style="display:flex;align-items:center;gap:6px;min-width:120px"><div class="tr" style="flex:1;background:var(--accbg);border-radius:4px;height:8px"><div style="width:'+Math.min(100,r.share*2)+'%;height:8px;border-radius:4px;background:var(--c1)"></div></div>'+r.share.toFixed(1)+'%</div>'},
+      {t:'Cumulative %',get:r=>r.cum,type:'n',tot:false,html:r=>r.cum.toFixed(1)+'%'}]}}});
+
+repPage('mode','Collection Mode-wise','Month-wise collection split by payment mode (Cash / NEFT / UPI / Cheque).',fromTo('mode'),
+  ()=>{const M={};DB.coll.forEach(c=>{if(!inRange('mode',c.date)||!recIncluded(c))return;const m=c.date.slice(0,7),r=M[m]||(M[m]={m,CASH:0,NEFT:0,UPI:0,CHQ:0,tot:0});r[c.type]=(r[c.type]||0)+c.value;r.tot+=c.value});
+    const rows=Object.values(M).sort((a,b)=>a.m<b.m?-1:1);const T=k=>r2(rows.reduce((a,r)=>a+(r[k]||0),0));
+    return {chips:TYPES.map(t=>[t,fmt(T(t))]).concat([['Total',fmt(T('tot'))]]),
+    rep:{title:'Collection Mode-wise',sub:rangeSub('mode')+' | '+rows.length+' months',file:'Collection_ModeWise',sheet:'Modes',rows,cols:[
+      {t:'Month',get:r=>r.m,html:r=>MON[+r.m.slice(5)-1]+' '+r.m.slice(0,4)}].concat(TYPES.map(t=>num0(t==='CHQ'?'Cheque':t,r=>r[t]||0)),[num0('Total',r=>r.tot,{html:r=>'<b>'+fmt(r.tot)+'</b>'})])}}});
+
+repPage('bills','Open Invoices (Bill-wise)','Every unsettled invoice with its balance and age - the working list for follow-up and reconciliation.',
+  ()=>inp('bills','q','Search party / invoice','text')+inp('bills','age','Min age (days)','number','style="width:110px" placeholder="0"')+chk('bills','od','Overdue only'),
+  ()=>{const C=compute(UI.asOn),q=nk(F('bills','q','')),qi=ik(F('bills','q','')),ma=+F('bills','age',0)||0,od=F('bills','od',false),cd=DB.settings.creditDays,rows=[];
+    Object.values(C.P).forEach(p=>p.bills.forEach(b=>{if(b.bal<=EPS)return;const age=dayDiff(b.date,UI.asOn);if(age<ma||(od&&age<=cd))return;
+      if(q&&!(nk(p.name).includes(q)||ik(b.inv).includes(qi)))return;rows.push({k:p.k,name:p.name,inv:b.inv,date:b.date,amt:b.amt,bal:b.bal,age,due:addDays(b.date,cd)})}));
+    rows.sort((a,b)=>b.age-a.age);
+    return {chips:[['Open invoices',rows.length],['Balance due',fmt(rows.reduce((a,r)=>a+r.bal,0))],['Overdue',rows.filter(r=>r.age>cd).length+' bills']],
+    rep:{title:'Open Invoices (Bill-wise)',sub:'As on '+asOnLabel()+' | '+rows.length+' invoices',file:'Open_Invoices',sheet:'Open Invoices',rows,cols:[
+      {t:'#',get:()=>null,html:(r,i)=>i+1,cls:'mut'},{t:'Party',get:r=>r.name,wrap:true,html:r=>pLink(r.k,r.name)},{t:'Invoice No.',get:r=>r.inv},{t:'Date',get:r=>r.date,type:'d'},{t:'Due Date',get:r=>r.due,type:'d'},
+      num0('Invoice Value',r=>r.amt),num0('Balance Due',r=>r.bal,{html:r=>'<b>'+fmt(r.bal)+'</b>'}),
+      {t:'Age (days)',get:r=>r.age,type:'n',int:true,html:r=>'<span class="pill '+(r.age>cd*2?'bad':r.age>cd?'warn':'ok')+'">'+r.age+'</span>'}]}}});
+
+repPage('daily','Daily Collection Report','Day-wise receipts by mode - for daily cash book and bank reconciliation.',fromTo('daily'),
+  ()=>{const M={};DB.coll.forEach(c=>{if(!inRange('daily',c.date)||!recIncluded(c))return;const r=M[c.date]||(M[c.date]={d:c.date,CASH:0,NEFT:0,UPI:0,CHQ:0,tot:0,n:0});r[c.type]=(r[c.type]||0)+c.value;r.tot+=c.value;r.n++});
+    const rows=Object.values(M).sort((a,b)=>a.d<b.d?1:-1),T=k=>r2(rows.reduce((a,r)=>a+(r[k]||0),0));
+    const best=rows.slice().sort((a,b)=>b.tot-a.tot)[0];
+    return {chips:[['Days',rows.length],['Total',fmt(T('tot'))],['Avg / day',fmt(rows.length?T('tot')/rows.length:0)],['Best day',best?disp(best.d)+' ('+fmt0(best.tot)+')':'-']],
+    rep:{title:'Daily Collection Report',sub:rangeSub('daily')+' | '+rows.length+' days',file:'Daily_Collection',sheet:'Daily',rows,cols:[
+      {t:'Date',get:r=>r.d,type:'d'},num0('Receipts',r=>r.n,{int:true})].concat(TYPES.map(t=>num0(t==='CHQ'?'Cheque':t,r=>r[t]||0)),[num0('Total',r=>r.tot,{html:r=>'<b>'+fmt(r.tot)+'</b>'})])}}});
+
+/* ===== receipt voucher ===== */
+function inWords(n){n=Math.round(n);if(!n)return 'Zero';const o=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'],t=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+  const two=x=>x<20?o[x]:t[Math.floor(x/10)]+(x%10?' '+o[x%10]:'');const three=x=>(x>=100?o[Math.floor(x/100)]+' Hundred'+(x%100?' ':''):'')+(x%100?two(x%100):'');
+  const p=[[1e7,'Crore'],[1e5,'Lakh'],[1e3,'Thousand']];let r='';p.forEach(([d,w])=>{const q=Math.floor(n/d);if(q){r+=(q<100?two(q):three(q))+' '+w+' ';n%=d}});if(n)r+=three(n);return r.trim()}
+function voucherPage(doc,c,first){
+  if(!first)doc.addPage();const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight(),party=pname(c.k);
+  pdfHead(doc,'RECEIPT VOUCHER',null,W);
+  const bal=(()=>{const P=compute(c.date).P[c.k];return P?P.net:null})(),L=(x,y,t,b)=>{doc.setFont('helvetica',b?'bold':'normal');doc.setFontSize(b?11:10);doc.setTextColor(b?20:70);doc.text(t,x,y)};
+  doc.setDrawColor(210,220,216);doc.setLineWidth(.3);doc.roundedRect(14,32,W-28,H-64,3,3);
+  L(20,44,'Voucher / Receipt No.');L(78,44,c.receipt||('V-'+c.id),true);L(W-70,44,'Date');L(W-52,44,disp(c.date),true);
+  L(20,57,'Received with thanks from');L(20,65,'M/s '+party,true);
+  doc.setFillColor(228,243,239);doc.roundedRect(20,73,W-40,22,2,2,'F');doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(90);doc.text('AMOUNT RECEIVED',26,80);
+  doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(11,107,92);doc.text('Rs. '+fmt(c.value),26,90);
+  doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(60);doc.text('Rupees '+inWords(c.value)+' Only',W-26,90,{align:'right'});
+  let y=106;const row=(a,b)=>{if(!b)return;L(20,y,a);L(70,y,String(b),true);y+=8};
+  row('Mode of payment',c.type==='CHQ'?'Cheque':c.type);row('Cheque / UTR / Ref No.',c.refNo);row('Ref date',c.refDate?disp(c.refDate):'');row('Against invoice(s)',c.inv);
+  if(c.type==='CHQ'&&c.status&&c.status!=='CLEARED')row('Cheque status',c.status+' (subject to realisation)');
+  if(bal!=null)row('Balance outstanding as on '+disp(c.date),fmt(bal)+(bal<-EPS?' Cr':' Dr'));
+  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(30);doc.text('For '+DB.company,W-20,H-52,{align:'right'});
+  doc.setDrawColor(90);doc.line(W-70,H-40,W-20,H-40);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(90);doc.text('Authorised Signatory',W-20,H-35,{align:'right'});
+  doc.setFontSize(7.5);doc.text('This is a computer generated receipt voucher.',20,H-35)}
+function exportVouchers(list,name){if(!list.length)return toast('No receipts to print',true);if(list.length>200&&!confirm(list.length+' vouchers will be generated. Continue?'))return;
+  const {jsPDF}=window.jspdf,doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a5',compress:true});
+  list.forEach((c,i)=>voucherPage(doc,c,i===0));pdfFoot(doc);doc.save(name);toast(list.length+' voucher(s) downloaded')}
+
+/* ===== dues calendar ===== */
+PAGES.cal=v=>{
+  const f=UI.f.cal=UI.f.cal||{};if(!f.m)f.m=UI.asOn.slice(0,7);const cd=DB.settings.creditDays,C=compute(UI.asOn),bills=[];
+  Object.values(C.P).forEach(p=>p.bills.forEach(b=>{if(b.bal>EPS)bills.push({k:p.k,name:p.name,inv:b.inv,date:b.date,due:addDays(b.date,cd),amt:b.amt,bal:b.bal,late:dayDiff(addDays(b.date,cd),UI.asOn)})}));
+  const by={};bills.forEach(b=>{const d=by[b.due]||(by[b.due]={n:0,amt:0});d.n++;d.amt+=b.bal});
+  const y=+f.m.slice(0,4),m=+f.m.slice(5),dim=new Date(Date.UTC(y,m,0)).getUTCDate(),start=(new Date(Date.UTC(y,m-1,1)).getUTCDay()+6)%7,mx=Math.max(1,...Object.values(by).map(d=>d.amt));
+  const mm=bills.filter(b=>b.due.slice(0,7)===f.m),over=bills.filter(b=>b.due<UI.asOn),wk=bills.filter(b=>b.due>=UI.asOn&&b.due<=addDays(UI.asOn,7)),sum=a=>r2(a.reduce((x,b)=>x+b.bal,0));
+  let cells='';for(let i=0;i<start;i++)cells+='<div class="cd e"></div>';
+  for(let d=1;d<=dim;d++){const ds=f.m+'-'+pad(d),x=by[ds],cls=['cd',x?'has':'',ds<UI.asOn&&x?'late':'',ds===UI.asOn?'today':'',f.sel===ds?'sel':''].join(' ');
+    cells+='<div class="'+cls+'" '+(x?'data-act="calday" data-d="'+ds+'"':'')+' style="'+(x?'--i:'+(.15+.85*x.amt/mx).toFixed(2):'')+'"><b>'+d+'</b>'+(x?'<span>'+fmt0(x.amt)+'</span><small>'+x.n+' bill'+(x.n>1?'s':'')+'</small>':'')+'</div>'}
+  v.innerHTML='<h1>Dues Calendar</h1><div class="sub">Invoices by due date (invoice date + '+cd+' credit days). Red = already past due as on '+asOnLabel()+'. Click a day to list its invoices.</div>'+
+  chips([['Due in '+MON[m-1]+' '+y,fmt(sum(mm))+' ('+mm.length+')'],['Next 7 days',fmt(sum(wk))+' ('+wk.length+')'],['Already overdue',fmt(sum(over))+' ('+over.length+')']])+
+  '<div class="bar"><button class="btn sec" data-act="calnav" data-d="-1">‹ Prev</button><b style="font-size:16px;min-width:150px;text-align:center">'+MON[m-1]+' '+y+'</b><button class="btn sec" data-act="calnav" data-d="1">Next ›</button><button class="btn sec" data-act="calnav" data-d="0">Today</button></div>'+
+  '<div class="card"><div class="cal">'+['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x=>'<div class="ch">'+x+'</div>').join('')+cells+'</div></div>'+
+  '<h2>'+(f.sel?'Due on '+disp(f.sel):'All invoices due in '+MON[m-1]+' '+y)+'</h2><div class="bar"><span style="flex:1"></span>'+exBtns('cal')+'</div>'+repHost('cal');
+  const rows=(f.sel?bills.filter(b=>b.due===f.sel):mm).sort((a,b)=>a.due<b.due?-1:a.due>b.due?1:b.bal-a.bal);
+  repView('cal',{title:'Dues Calendar',sub:(f.sel?'Due on '+disp(f.sel):'Due in '+MON[m-1]+' '+y)+' | '+rows.length+' invoices',file:'Dues_Calendar',sheet:'Dues',rows,cols:[
+    {t:'Due Date',get:b=>b.due,type:'d'},{t:'Party',get:b=>b.name,wrap:true,html:b=>pLink(b.k,b.name)},{t:'Invoice No.',get:b=>b.inv},{t:'Invoice Date',get:b=>b.date,type:'d'},
+    {t:'Invoice Value',get:b=>b.amt,type:'n',tot:true},{t:'Balance Due',get:b=>b.bal,type:'n',tot:true,html:b=>'<b>'+fmt(b.bal)+'</b>'},
+    {t:'Status',get:b=>b.late>0?b.late+' days late':b.late===0?'Due today':'in '+(-b.late)+' days',html:b=>'<span class="pill '+(b.late>0?'bad':b.late>-8?'warn':'ok')+'">'+(b.late>0?b.late+' days late':b.late===0?'Due today':'in '+(-b.late)+' days')+'</span>'}]})};
+
+/* import / export */
+PAGES.imp=v=>{
+  v.innerHTML='<h1>Import / Export</h1><div class="sub">Upload sales and collections in your upload formats. Duplicates are skipped automatically, so overlapping files are safe.</div><div class="imp">'+
+  card('Sales','Columns: DATE, PARTY, INV NO., VALUE','sales','<button class="btn sec sm" data-act="tpl" data-t="sales">Download format</button>')+
+  card('Collection','Columns: DATE, TYPE, PARTY NAME, REF DATE, REF NO., VALUE, RECEIPT NO., AGAINST INV.  (also accepts the wide DB layout with NEFT/CASH/UPI/CHQ VALUE columns)','coll','<button class="btn sec sm" data-act="tpl" data-t="coll">Download format</button>')+
+  '</div><h2 style="margin-top:8px">Export</h2><div class="card"><div class="bar" style="margin:0">'+
+  '<button class="btn" data-act="exall">⬇ All reports (one Excel workbook)</button><button class="btn sec" data-act="exclose">⬇ Closing OS party-wise (Excel, next-year opening format)</button><button class="btn sec" data-act="exjson">⬇ Backup (JSON)</button><label class="btn sec" style="cursor:pointer">Restore backup<input id="rjson" type="file" accept=".json" hidden></label></div><div class="small mut" style="margin-top:8px">Changes are saved automatically. A JSON backup is still handy before year-end rollover.</div></div>';
+  function card(t,d,kind,extra){return '<div class="card"><h2>'+t+'</h2><div class="small mut" style="margin-bottom:10px">'+d+'</div><div class="dz" data-dz="'+kind+'" tabindex="0"><div class="ic">⬆</div><div class="t1">Drag &amp; drop your Excel / CSV file here</div><div>or <button type="button" class="btn sm" data-browse="'+kind+'">Browse files</button></div><input type="file" accept=".xlsx,.xls,.csv" data-up="'+kind+'"></div><div style="margin-top:10px">'+extra+'</div></div>'}
+  $$('[data-up]').forEach(i=>i.onchange=()=>{const f=i.files&&i.files[0];if(f)startImport(i.dataset.up,f);setTimeout(()=>{i.value=''},500)});
+  $$('[data-browse]').forEach(b=>b.addEventListener('click',ev=>{ev.stopPropagation();const i=$('[data-up="'+b.dataset.browse+'"]');if(i)i.click()}));
+  $$('[data-dz]').forEach(z=>{z.addEventListener('click',ev=>{if(ev.target.closest('[data-browse]')||ev.target.tagName==='INPUT')return;const i=z.querySelector('input[type=file]');if(i)i.click()});z.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();z.querySelector('input[type=file]').click()}})});
+  $$('[data-dz]').forEach(z=>{['dragenter','dragover'].forEach(e=>z.addEventListener(e,ev=>{ev.preventDefault();z.classList.add('on')}));['dragleave','drop'].forEach(e=>z.addEventListener(e,ev=>{ev.preventDefault();z.classList.remove('on')}));
+    z.addEventListener('drop',ev=>{if(ev.dataTransfer.files[0])startImport(z.dataset.dz,ev.dataTransfer.files[0])})});
+  $('#rjson').onchange=e=>{const f=e.target.files[0];if(!f)return;if(!confirm('Restore will REPLACE all current data with the backup. Continue?'))return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d.parties||!d.settings)throw 0;DB=Object.assign(newDB(),d);dirtyParties();bump();toast('Backup restored');go('dash')}catch(x){toast('Invalid backup file',true)}})};
+};
+PAGES.set=v=>{
+  const S=DB.settings;
+  v.innerHTML='<h1>Settings</h1><div class="sub">Company, financial year, aging buckets and data tools.</div><div class="card"><div class="fg"><label class="full">Company name<input id="s_co" value="'+esc(DB.company)+'"></label>'+
+  '<label>Opening balance date (as on)<input id="s_od" type="date" value="'+S.openDate+'"></label><label>Opening label<input id="s_ol" value="'+esc(S.openLabel)+'"></label>'+
+  '<label>Financial year start<input id="s_fs" type="date" value="'+S.fyStart+'"></label><label>Financial year end<input id="s_fe" type="date" value="'+S.fyEnd+'"></label>'+
+  '<label>Credit days (for overdue)<input id="s_cd" type="number" value="'+S.creditDays+'"></label><label>Aging buckets (days, comma separated)<input id="s_bk" value="'+S.buckets.join(',')+'"></label>'+
+  '<label class="full" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="s_pc" '+(S.pendingChq?'checked':'')+'> Count PENDING cheques as received (bounced cheques are always excluded)</label>'+
+  '<label>Theme<select id="s_th"><option value="light" '+(S.theme==='light'?'selected':'')+'>Light</option><option value="dark" '+(S.theme==='dark'?'selected':'')+'>Dark</option></select></label></div><div class="acts"><button class="btn" data-act="saveset">Save settings</button></div></div>'+
+  '<div class="card"><h2>Data tools</h2><div class="bar" style="margin:0"><button class="btn sec" data-act="rollover">Year-end rollover (closing OS becomes next-year opening)</button><button class="btn sec" data-act="reload">Refresh data</button><button class="btn bad" data-act="wipe">Erase all data</button></div></div>';
+};
+const PAGE_ORDER=Object.keys(PAGES);
+</script>
+<script>'use strict';
+/* ===== statements (PDF) ===== */
+function stmtParty(doc,k,from,to,first){
+  const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
+  if(!first)doc.addPage();
+  const L=buildLedger(k,from,to),C=compute(to),p=C.P[k];
+  const head=()=>{pdfHead(doc,'Statement of Account',null,W);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(30);doc.text(pname(k),14,24);doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(90);doc.text('Period: '+disp(from)+' to '+disp(to),W-14,24,{align:'right'})};
+  const body=L.rows.map(r=>[disp(r.date),r.part,r.ref,r.dr?fmt(r.dr):'',r.cr?fmt(r.cr):'',fmt(Math.abs(r.bal))+(r.bal<-EPS?' Cr':r.bal>EPS?' Dr':'')]);
+  doc.autoTable({head:[['Date','Particulars','Reference','Debit','Credit','Balance']],body,foot:[['','','Total',fmt(L.dr),fmt(L.cr),fmt(Math.abs(L.close))+(L.close<-EPS?' Cr':' Dr')]],startY:30,theme:'grid',margin:{left:14,right:14,top:30,bottom:12},
+    styles:{fontSize:7.5,cellPadding:1.4,lineColor:[210,220,216],lineWidth:.15},headStyles:{fillColor:[11,107,92],textColor:255},footStyles:{fillColor:[228,243,239],textColor:20,fontStyle:'bold'},alternateRowStyles:{fillColor:[248,250,249]},
+    columnStyles:{0:{cellWidth:20},3:{halign:'right',cellWidth:24},4:{halign:'right',cellWidth:24},5:{halign:'right',cellWidth:28}},showFoot:'lastPage',
+    didParseCell:d=>{if(d.section==='head'&&d.column.index>=3)d.cell.styles.halign='right'},didDrawPage:head});
+  const open=p?p.bills.filter(b=>b.bal>EPS&&b.date<=to):[];
+  if(open.length||(p&&p.adv>EPS)){
+    let y=doc.lastAutoTable.finalY+7;if(y>H-50){doc.addPage();y=32}
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(11,107,92);doc.text('Outstanding bills as on '+disp(to),14,y);
+    const rows=open.map(b=>[b.inv,disp(b.date),fmt(b.amt),fmt(b.amt-b.bal),fmt(b.bal),String(b.days)]);
+    if(p.adv>EPS)rows.push(['Advance / unadjusted receipts','','','',fmt(-p.adv),'']);
+    doc.autoTable({head:[['Invoice No.','Date','Bill Amount','Received','Balance','Days']],body:rows,foot:[['Net outstanding','','','',fmt(p.net),'']],startY:y+2,theme:'grid',margin:{left:14,right:14,top:30,bottom:12},styles:{fontSize:7.5,cellPadding:1.3,lineColor:[210,220,216],lineWidth:.15},headStyles:{fillColor:[60,110,100],textColor:255},footStyles:{fillColor:[228,243,239],textColor:20,fontStyle:'bold'},
+      columnStyles:{2:{halign:'right'},3:{halign:'right'},4:{halign:'right'},5:{halign:'right'}},didParseCell:d=>{if(d.section==='head'&&d.column.index>=2)d.cell.styles.halign='right'},didDrawPage:head,showFoot:'lastPage'});
+    const L2=bucketLabels();let y2=doc.lastAutoTable.finalY+5;if(y2>H-20){doc.addPage();y2=32}
+    doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(70);doc.text('Aging: '+L2.map((l,i)=>l+'d: '+fmt(p.b[i])).join('   |   '),14,y2);
+  }
+}
+async function makeStatements(keys,from,to,fname){
+  if(!keys.length){toast('No parties to print',true);return}
+  const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4',compress:true});
+  const m=modal('<h2>Preparing statements...</h2><div id="prg" class="mut">0 / '+keys.length+'</div>');
+  for(let i=0;i<keys.length;i++){stmtParty(doc,keys[i],from,to,i===0);
+    if(i%25===24){$('#prg').textContent=(i+1)+' / '+keys.length;await new Promise(r=>setTimeout(r))}}
+  pdfFoot(doc);doc.save(fname);closeModal();toast('Statements PDF ready ('+keys.length+' parties)');
+}
+
+/* ===== import ===== */
+async function startImport(kind,file){
+  let wb;try{wb=XLSX.read(await file.arrayBuffer(),{type:'array'})}catch(e){toast('Cannot read file: '+e.message,true);return}
+  if(kind==='db'){
+    const hasOS=!!findTable(wb,['PARTY NAME','VALUE']),hasS=!!findTable(wb,['DATE','PARTY','INV NO.']),hasC=!!findTable(wb,['DATE','PARTY NAME','TYPE']);
+    if(!hasOS&&!hasS&&!hasC){toast('No recognisable sheets found (need PARTY NAME/VALUE, DATE/PARTY/INV NO. or the collection headers)',true);return}
+    const m=modal('<h2>Import database</h2><div class="sub">Found: '+[hasOS&&'Outstanding sheet',hasS&&'Sales sheet',hasC&&'Collection sheet'].filter(Boolean).join(', ')+'</div><label><input type="radio" name="dm" value="r" checked> <b>Replace</b> all current data with this file</label><br><label><input type="radio" name="dm" value="m"> <b>Merge</b> into current data (opening balances are added; duplicate invoices / receipts skipped)</label><div class="acts"><button class="btn sec" data-act="close">Cancel</button><button class="btn" id="dgo">Import</button></div>');
+    $('#dgo').onclick=()=>{const rep=$('input[name=dm]:checked').value==='r';const r=loadFull(wb,rep);closeModal();
+      toast('Imported'+(r.os?' '+r.os.n+' opening balances;':'')+(r.sales?' '+r.sales.n+' invoices;':'')+(r.coll?' '+r.coll.n+' receipts':''));go('dash')};
+    return;
+  }
+  let tab,plan;
+  if(kind==='sales'){tab=findTable(wb,['DATE','INV NO.'])||findTable(wb,['DATE','INV NO']);if(!tab){toast('Sales sheet not found. Headers needed: DATE, PARTY, INV NO., VALUE',true);return}plan=planSales(parseSalesRows(tab.rows))}
+  else{tab=findTable(wb,['DATE','PARTY NAME','TYPE']);if(!tab){toast('Collection sheet not found. Headers needed: DATE, TYPE, PARTY NAME, ... VALUE',true);return}plan=planColl(parseCollRows(tab))}
+  showPlan(plan,file.name);
+}
+function showPlan(plan,fname){
+  const unk=Object.entries(plan.unknown);
+  unk.forEach(([k,u])=>{u.sug=suggest(u.name,3)});
+  const sel1=(k,u)=>'<select data-un="'+esc(k)+'" style="max-width:340px"><option value="__new__">Create new party</option>'+u.sug.map(s=>'<option value="'+esc(s[0])+'">Map to: '+esc(pname(s[0]))+' ('+Math.round(s[1]*100)+'%)</option>').join('')+'</select>';
+  const m=modal('<h2>Review '+(plan.kind==='sales'?'sales':'collection')+' import</h2><div class="sub">'+esc(fname)+'</div>'+
+    chips([['Ready to import',plan.ok.length],['Value',fmt(plan.total)],['Duplicates skipped',plan.dups.length],['Rejected rows',plan.issues.length],...(plan.kind==='sales'?[['Cancelled invoices',plan.cancelled.length]]:[])])+
+    (unk.length?'<h2>Unknown parties ('+unk.length+')</h2><div class="small mut">These names are not in Party Master. Map to an existing party if it is just a spelling difference, otherwise a new party is created.</div><div style="max-height:240px;overflow:auto;margin:8px 0"><table><thead><tr><th>Name in file</th><th class="n">Entries</th><th>Action</th></tr></thead><tbody>'+unk.slice(0,300).map(([k,u])=>'<tr><td class="w">'+esc(u.name)+'</td><td class="n">'+u.count+'</td><td>'+sel1(k,u)+'</td></tr>').join('')+'</tbody></table></div><button class="btn sec sm" id="mapall">Map all to best suggestion</button>':'')+
+    (plan.issues.length?'<h2 style="margin-top:12px">Rejected rows</h2><div class="small" style="max-height:130px;overflow:auto">'+plan.issues.slice(0,60).map(i=>'Row '+i.n+': <b>'+esc(i.msg)+'</b> <span class="mut">'+esc(i.d)+'</span>').join('<br>')+'</div>':'')+
+    (plan.dups.length?'<h2 style="margin-top:12px">Skipped duplicates / conflicts</h2><div class="small" style="max-height:130px;overflow:auto">'+plan.dups.slice(0,60).map(i=>'Row '+i.n+': '+esc(i.inv||'')+' '+esc(i.party)+' - <b>'+esc(i.msg)+'</b>').join('<br>')+(plan.dups.length>60?'<br>...':'')+'</div>':'')+
+    '<div class="acts"><button class="btn sec" data-act="close">Cancel</button><button class="btn" id="pgo" '+(plan.ok.length?'':'disabled')+'>Import '+plan.ok.length+' entries</button></div>',true);
+  $('#mapall')&&($('#mapall').onclick=()=>{$$('select[data-un]').forEach(s=>{if(s.options.length>1)s.selectedIndex=1})});
+  $('#pgo').onclick=()=>{const map={};$$('select[data-un]').forEach(s=>map[s.dataset.un]=s.value);
+    const r=commitPlan(plan,map,fname);closeModal();toast('Imported '+plan.ok.length+' entries'+(r.created?' ('+r.created+' new parties)':''));render()};
+}
+
+/* ===== downloads ===== */
+function xs(rows,hdr){const ws=XLSX.utils.aoa_to_sheet([hdr.map(h=>({v:h,t:'s',s:HDR})),...rows]);ws['!cols']=hdr.map(h=>({wch:Math.max(14,h.length+4)}));return ws}
+const dcell=iso=>iso?{v:serial(iso),t:'n',z:'dd-mm-yyyy',s:{numFmt:'dd-mm-yyyy'}}:{v:'',t:'s'};
+function downloadTemplate(t){
+  if(t==='sales'){saveXlsx([['Sheet1',xs([],['DATE','PARTY','INV NO.','VALUE'])]],'SALES_UPLOAD_FORMAT.xlsx');return}
+  const hdr=['DATE','TYPE','PARTY NAME','REF DATE','REF NO.','VALUE','RECEIPT NO.','AGAINST INV.'];
+  const ex=[[dcell('2026-04-01'),'CASH','ABC TRADERS','','',1000,'REC123','INV12345'],[dcell('2026-04-02'),'NEFT','ABC TRADERS','','1234567',1500,'REC124','INV12345'],[dcell('2026-04-03'),'UPI','ABC TRADERS','','24680',500,'REC125','INV12345'],[dcell('2026-04-04'),'CHQ','ABC TRADERS',dcell('2026-04-03'),'000245',5000,'REC126','INV12345']];
+  saveXlsx([['FORMAT',xs(ex,hdr)],['TYPE - REFERENCE',xs([['CASH','-','-',0],['NEFT','UTR NO.','-',0],['UPI','TXN NO.','-',0],['CHQ','CHQ NO.','CHQ DATE',0]],['TYPE','REF NO.','REF DATE','VALUE'])]],'COLLECTION_UPLOAD_FORMAT.xlsx');
+}
+function exportDB(){
+  const S=DB.settings,keys=Object.keys(DB.parties).sort((a,b)=>pname(a).localeCompare(pname(b)));
+  const os=xs(keys.filter(k=>DB.opening[k]).map(k=>[pname(k),{v:DB.opening[k],t:'n',z:'#,##0.00'}]),['PARTY NAME','VALUE']);
+  const sales=xs([...DB.sales].sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.id-b.id).map(s=>[dcell(s.date),pname(s.k),s.inv,{v:s.value,t:'n',z:'#,##0.00'}]),['DATE','PARTY','INV NO.','VALUE']);
+  const n=v=>({v,t:'n',z:'#,##0.00'});
+  const coll=xs([...DB.coll].sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.id-b.id).map(c=>[dcell(c.date),c.type,pname(c.k),c.type==='NEFT'?n(c.value):'',c.type==='CASH'?n(c.value):'',c.type==='UPI'?n(c.value):'',c.type==='UPI'?c.refNo:'',c.type==='CHQ'?n(c.value):'',c.type==='CHQ'?dcell(c.refDate):'',c.type==='CHQ'?c.refNo:'',c.receipt,c.inv,dcell(c.added),c.type==='NEFT'?c.refNo:'',c.type==='CHQ'?c.status:'']),
+    ['DATE','TYPE','PARTY NAME','NEFT VALUE','CASH VALUE','UPI VALUE','UPI TXN NO.','CHQ VALUE','CHQ DATE','CHQ NO.','RECEIPT NO.','AGAINST INV.','LAST UPDATED','NEFT UTR NO.','CHQ STATUS']);
+  saveXlsx([[S.openLabel+'_OS',os],['SALES',sales],['COLLECTION',coll]],DB.company.replace(/\W+/g,'_')+'_DB_'+todayISO()+'.xlsx');
+}
+function exportClosing(){
+  const C=compute(UI.asOn);const rows=Object.values(C.P).filter(p=>Math.abs(p.net)>EPS).sort((a,b)=>a.name.localeCompare(b.name)).map(p=>[p.name,{v:p.net,t:'n',z:'#,##0.00'}]);
+  saveXlsx([['Closing OS '+UI.asOn,xs(rows,['PARTY NAME','VALUE'])]],'CLOSING_OS_'+UI.asOn+'.xlsx');
+}
+
+/* ===== entry forms ===== */
+function openBillsHtml(k){
+  const C=compute('9999-12-31'),p=C.P[k];if(!p)return '';const o=p.bills.filter(b=>b.bal>EPS);
+  if(!o.length)return '<span class="mut small">No open bills.</span>';
+  return '<div class="small mut">Open bills (click to add): '+o.slice(0,40).map(b=>'<a class="lk" data-act="pickinv" data-inv="'+esc(b.inv)+'">'+esc(b.inv)+' ['+fmt(b.bal)+']</a>').join(' &middot; ')+'</div>';
+}
+function saleForm(id){
+  const s=id?DB.sales.find(x=>x.id===id):null;
+  modal('<h2>'+(s?'Edit':'Add')+' Sale</h2><div class="fg"><label>Date<input id="f_d" type="date" value="'+(s?s.date:todayISO())+'"></label><label>Invoice No.<input id="f_i" value="'+esc(s?s.inv:'')+'"></label><label class="full">Party<input id="f_p" type="text" value="'+esc(s?pname(s.k):'')+'" autocomplete="off"></label><label>Value<input id="f_v" type="number" step="0.01" value="'+(s?s.value:'')+'"></label></div><div class="small mut">A new party name is created automatically.</div><div class="acts"><button class="btn sec" data-act="close">Cancel</button><button class="btn" id="f_ok">Save</button></div>');
+  partyPicker($('#f_p'));
+  $('#f_ok').onclick=()=>{const date=$('#f_d').value,inv=clean($('#f_i').value),pn=clean($('#f_p').value),val=num($('#f_v').value);
+    if(!date||!inv||!pn||val==null||val===0)return toast('Fill date, invoice no., party and value',true);
+    const dup=DB.sales.find(x=>ik(x.inv)===ik(inv)&&(!s||x.id!==s.id));if(dup)return toast('Invoice no. already exists ('+disp(dup.date)+', '+pname(dup.k)+')',true);
+    const k=partyKeyFromInput($('#f_p'))||ensureParty(pn);
+    if(s){s.date=date;s.inv=inv;s.k=k;s.value=val}else DB.sales.push({id:DB.seq++,date,k,inv,value:val});
+    bump();closeModal();toast('Saved');render()};
+}
+function collForm(id){
+  const c=id?DB.coll.find(x=>x.id===id):null;
+  modal('<h2>'+(c?'Edit':'Add')+' Collection</h2><div class="fg"><label>Date<input id="f_d" type="date" value="'+(c?c.date:todayISO())+'"></label><label>Mode<select id="f_t">'+TYPES.map(t=>'<option '+(c&&c.type===t?'selected':'')+'>'+t+'</option>').join('')+'</select></label>'+
+    '<label class="full">Party<input id="f_p" type="text" value="'+esc(c?pname(c.k):'')+'" autocomplete="off"></label><label>Value<input id="f_v" type="number" step="0.01" value="'+(c?c.value:'')+'"></label><label>Receipt No.<input id="f_r" value="'+esc(c?c.receipt:'')+'"></label>'+
+    '<label id="l_ref">Ref No.<input id="f_n" value="'+esc(c?c.refNo:'')+'"></label><label id="l_rd">Ref Date (cheque date)<input id="f_rd" type="date" value="'+(c&&c.refDate?c.refDate:'')+'"></label>'+
+    '<label class="full">Against Invoice(s) <span class="small">(comma separated; blank = adjust oldest first)</span><input id="f_i" value="'+esc(c?c.inv:'')+'"></label><div class="full" id="f_bills"></div>'+
+    '<label id="l_cs">Cheque status<select id="f_cs">'+['CLEARED','PENDING','BOUNCED'].map(t=>'<option '+(c&&c.status===t?'selected':'')+'>'+t+'</option>').join('')+'</select></label></div><div class="acts"><button class="btn sec" data-act="close">Cancel</button><button class="btn" id="f_ok">Save</button></div>');
+  const tsync=()=>{const t=$('#f_t').value;$('#l_ref').firstChild.textContent=t==='CHQ'?'Cheque No.':t==='UPI'?'UPI Txn No.':t==='NEFT'?'UTR No.':'Ref No.';$('#l_ref').style.display=t==='CASH'?'none':'';$('#l_rd').style.display=t==='CHQ'?'':'none';$('#l_cs').style.display=t==='CHQ'?'':'none'};
+  $('#f_t').onchange=tsync;tsync();
+  partyPicker($('#f_p'),k=>{$('#f_bills').innerHTML=openBillsHtml(k)});if(c)$('#f_bills').innerHTML=openBillsHtml(c.k);
+  $('#f_ok').onclick=()=>{const date=$('#f_d').value,type=$('#f_t').value,pn=clean($('#f_p').value),val=num($('#f_v').value);
+    if(!date||!pn||val==null||val<=0)return toast('Fill date, party and a positive value',true);
+    const k=partyKeyFromInput($('#f_p'))||ensureParty(pn);
+    const o={date,type,k,value:val,receipt:clean($('#f_r').value),refNo:type==='CASH'?'':clean($('#f_n').value),refDate:type==='CHQ'?($('#f_rd').value||null):null,inv:clean($('#f_i').value),status:type==='CHQ'?$('#f_cs').value:''};
+    if(c)Object.assign(c,o);else DB.coll.push({id:DB.seq++,added:todayISO(),...o});
+    bump();closeModal();toast('Saved');render()};
+}
+function partyForm(k){
+  const p=k?DB.parties[k]:null;
+  modal('<h2>'+(p?'Edit':'Add')+' Party</h2><div class="fg"><label class="full">Party name<input id="f_n" value="'+esc(p?p.name:'')+'"></label><label class="full">Opening balance (as on '+disp(DB.settings.openDate)+', Dr positive / Cr negative)<input id="f_o" type="number" step="0.01" value="'+(k?(DB.opening[k]||0):0)+'"></label></div><div class="acts"><button class="btn sec" data-act="close">Cancel</button><button class="btn" id="f_ok">Save</button></div>');
+  $('#f_ok').onclick=()=>{const n=clean($('#f_n').value),o=num($('#f_o').value)||0;if(!n)return toast('Enter party name',true);
+    if(k){const ex=findParty(n);if(ex&&ex!==k)return toast('Another party already has this name - use Merge',true);DB.parties[k].name=n;DB.alias[nk(n)]=k}
+    else{if(findParty(n))return toast('Party already exists',true);k=ensureParty(n)}
+    if(o)DB.opening[k]=o;else delete DB.opening[k];dirtyParties();bump();closeModal();toast('Saved');render()};
+}
+function mergeParty(a,b){
+  DB.opening[b]=r2((DB.opening[b]||0)+(DB.opening[a]||0));if(!DB.opening[b])delete DB.opening[b];delete DB.opening[a];
+  DB.sales.forEach(s=>{if(s.k===a)s.k=b});DB.coll.forEach(c=>{if(c.k===a)c.k=b});
+  const nm=nk(DB.parties[a].name);for(const x in DB.alias)if(DB.alias[x]===a)DB.alias[x]=b;
+  DB.alias[a]=b;DB.alias[nm]=b;delete DB.parties[a];dirtyParties();bump();
+}
+function mergeForm(k){
+  modal('<h2>Merge party</h2><div class="sub">Move everything from <b>'+esc(pname(k))+'</b> into another party. This name will map to the target in future imports.</div><label class="f">Merge into<input id="f_t" type="text" style="width:100%" autocomplete="off" placeholder="type target party..."></label><div class="acts"><button class="btn sec" data-act="close">Cancel</button><button class="btn" id="f_ok">Merge</button></div>');
+  partyPicker($('#f_t'));
+  $('#f_ok').onclick=()=>{const t=partyKeyFromInput($('#f_t'));if(!t||!DB.parties[t])return toast('Pick the target party from the list',true);if(t===k)return toast('Choose a different party',true);
+    mergeParty(k,t);closeModal();toast('Merged');render()};
+}
+function dupsView(){
+  const out=[],seen=new Set(),PB=pbig();const keys=Object.keys(DB.parties);
+  const gst=n=>/GST/i.test(n)?(/NON\s*-?\s*GST/i.test(n)?'N':'G'):'';
+  const cand=keys.filter(k=>!DB.opening[k]);
+  for(const k of cand){const A=PB[k];let best=null;
+    for(const o of keys){if(o===k)continue;const s=dice(A,PB[o]);if(s>=0.8&&(!best||s>best[1]))best=[o,s]}
+    if(best){const id=[k,best[0]].sort().join('|');if(!seen.has(id)){seen.add(id);out.push({a:k,b:best[0],s:best[1],gst:gst(pname(k))!==gst(pname(best[0]))})}}}
+  out.sort((x,y)=>y.s-x.s);
+  modal('<h2>Possible duplicate parties</h2><div class="sub">New-this-year names that closely match another party. Review each - only merge genuine spelling variants.</div><div style="max-height:60vh;overflow:auto"><table><thead><tr><th>New / unmatched name</th><th>Looks like</th><th class="n">Match</th><th></th></tr></thead><tbody>'+
+    (out.slice(0,250).map(r=>'<tr><td class="w">'+esc(pname(r.a))+'</td><td class="w">'+esc(pname(r.b))+(r.gst?' <span class="pill warn">GST variant</span>':'')+'</td><td class="n">'+Math.round(r.s*100)+'%</td><td><button class="btn sm sec" data-act="domerge" data-a="'+esc(r.a)+'" data-b="'+esc(r.b)+'">Merge into '+(DB.opening[r.b]?'opening party':'right')+'</button></td></tr>').join('')||'<tr><td colspan="4" class="mut" style="padding:20px">No likely duplicates found.</td></tr>')+'</tbody></table></div><div class="acts"><button class="btn sec" data-act="close">Close</button></div>',true);
+}
+
+/* ===== settings actions ===== */
+function saveSettings(){
+  const S=DB.settings;
+  const b=$('#s_bk').value.split(/[,\s]+/).filter(Boolean).map(Number);
+  if(!b.length||b.some((x,i)=>!(x>0)||(i&&x<=b[i-1])))return toast('Buckets must be increasing positive numbers, e.g. 30,60,90,120,180',true);
+  DB.company=clean($('#s_co').value)||DB.company;S.openDate=$('#s_od').value||S.openDate;S.openLabel=$('#s_ol').value||S.openLabel;S.fyStart=$('#s_fs').value||S.fyStart;S.fyEnd=$('#s_fe').value||S.fyEnd;
+  S.creditDays=+$('#s_cd').value||30;S.buckets=b;S.pendingChq=$('#s_pc').checked;S.theme=$('#s_th').value;lsSet('ea_theme',S.theme);applyTheme();bump();toast('Settings saved');render();
+}
+const applyTheme=()=>{const th=lsGet('ea_theme')||DB.settings.theme;document.documentElement.dataset.theme=th==='dark'?'dark':'light';const t=$('#themeBtn');if(t)t.textContent=th==='dark'?'☀':'☾';document.title=DB.company+' - Accounts'};
+const fyLabel=y=>'FY '+String(y).slice(2)+'-'+String(y+1).slice(2);
+async function rollover(){
+  const S=DB.settings;
+  if(!confirm('Year-end rollover:\n\n• A JSON backup will be downloaded first\n• Closing outstanding as on '+disp(S.fyEnd)+' becomes the new opening balance (party-wise)\n• Sales/collections up to '+disp(S.fyEnd)+' are removed (a backup copy is kept)\n\nContinue?'))return;
+  exportJSON();if(!(await archiveSheets()))return;const C=compute(S.fyEnd);const op={};for(const k in C.P){const n=C.P[k].net;if(Math.abs(n)>EPS)op[k]=n}
+  DB.opening=op;DB.sales=DB.sales.filter(s=>s.date>S.fyEnd);DB.coll=DB.coll.filter(c=>c.date>S.fyEnd);DB.cancelled=[];
+  const y=+S.fyEnd.slice(0,4);S.openDate=S.fyEnd;S.openLabel=fyLabel(y-1);S.fyStart=addDays(S.fyEnd,1);S.fyEnd=(y+1)+S.fyEnd.slice(4);S.fyLabel=fyLabel(y);
+  bump();toast('Rollover complete');go('dash');
+}
+function exportJSON(){saveBlob(new Blob([JSON.stringify(DB)],{type:'application/json'}),DB.company.replace(/\W+/g,'_')+'_backup_'+todayISO()+'.json')}
+
+/* ===== extra exports ===== */
+function repMatrix(rep){const cols=rep.cols.filter(c=>c.t!==''),rows=rep._sorted||rep.rows;
+  return [cols.map(c=>c.t)].concat(rows.map((r,i)=>cols.map(c=>{const v=c.t==='#'?i+1:c.get(r);return c.type==='d'?disp(v):v==null?'':(c.type==='n'?r2(+v):v)})))}
+function exportCsv(id){const rep=REP[id];if(!rep)return;const csv=repMatrix(rep).map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  saveBlob(new Blob(['\ufeff'+csv],{type:'text/csv'}),(rep.file||id)+'_'+UI.asOn+'.csv')}
+async function copyRep(id){const rep=REP[id];if(!rep)return;const t=repMatrix(rep).map(r=>r.join('\t')).join('\n');
+  try{await navigator.clipboard.writeText(t);toast('Copied '+(rep._sorted||rep.rows).length+' rows - paste into Excel / WhatsApp')}catch(e){toast('Copy blocked by browser',true)}}
+function reminderText(){const rows=(REP.overdue&&(REP.overdue._sorted||REP.overdue.rows))||[];if(!rows.length)return toast('No overdue parties',true);
+  const t=rows.map(r=>'*'+r.name+'*: Rs. '+fmt(r.overdue)+' overdue'+(r.oldestDays?' (oldest bill '+r.oldestDays+' days)':'')).join('\n');
+  navigator.clipboard.writeText('Dear Sir/Madam,\nGentle reminder from '+DB.company+' - overdue as on '+disp(UI.asOn)+':\n\n'+t+'\n\nKindly arrange payment at the earliest. Thank you.').then(()=>toast('Reminder text copied ('+rows.length+' parties)'),()=>toast('Copy blocked by browser',true))}
+function exportAllReports(){
+  const C=compute(UI.asOn),cd=DB.settings.creditDays,S=DB.settings,tx=(t,get,o)=>Object.assign({t,get,type:'t'},o),n=(t,get,o)=>Object.assign({t,get,type:'n',tot:true},o);
+  const os=osRows(),bills=[],M={};
+  Object.values(C.P).forEach(p=>p.bills.forEach(b=>{if(b.bal>EPS)bills.push({name:p.name,inv:b.inv,date:b.date,amt:b.amt,bal:b.bal,age:dayDiff(b.date,UI.asOn)})}));bills.sort((a,b)=>b.age-a.age);
+  DB.sales.forEach(x=>{if(x.date>UI.asOn)return;const m=x.date.slice(0,7),r=M[m]||(M[m]={m,sales:0,coll:0});r.sales+=x.value});
+  DB.coll.forEach(x=>{if(x.date>UI.asOn||!recIncluded(x))return;const m=x.date.slice(0,7),r=M[m]||(M[m]={m,sales:0,coll:0});r.coll+=x.value});
+  const R=(title,sheet,rows,cols)=>[sheet,xlsxFromRep({rows,cols,_sorted:rows},title,'As on '+disp(UI.asOn))];
+  saveXlsx([
+    R('Outstanding Party-wise','Outstanding',os,[tx('Party',r=>r.name),n('Opening',r=>r.open),n('Sales',r=>r.sales),n('Collection',r=>r.coll+r.cn),n('Net Outstanding',r=>r.net),n('Overdue',r=>r.overdue),{t:'Last Receipt',get:r=>r.last,type:'d'}]),
+    R('Open Invoices','Open Invoices',bills,[tx('Party',r=>r.name),tx('Invoice',r=>r.inv),{t:'Date',get:r=>r.date,type:'d'},n('Value',r=>r.amt),n('Balance',r=>r.bal),n('Age (days)',r=>r.age,{tot:false})]),
+    R('Monthly Summary','Monthly',Object.values(M).sort((a,b)=>a.m<b.m?-1:1),[tx('Month',r=>r.m),n('Sales',r=>r.sales),n('Collection',r=>r.coll)]),
+    R('Sales Register','Sales',DB.sales.filter(x=>x.date<=UI.asOn),[{t:'Date',get:x=>x.date,type:'d'},tx('Party',x=>pname(x.k)),tx('Invoice',x=>x.inv),n('Value',x=>x.value)]),
+    R('Collection Register','Collection',DB.coll.filter(x=>x.date<=UI.asOn),[{t:'Date',get:x=>x.date,type:'d'},tx('Party',x=>pname(x.k)),tx('Mode',x=>x.type),n('Value',x=>x.value),tx('Against Inv.',x=>x.inv||'')])
+  ],'Emerald_All_Reports_'+UI.asOn+'.xlsx');toast('All-reports workbook downloaded')}
+
+/* ===== management summary ===== */
+function sumDue(){const f=lsGet('ea_sumfreq')||'off';if(f==='off')return false;const l=lsGet('ea_sumlast');return !l||dayDiff(l,todayISO())>=(f==='daily'?1:7)}
+function exportSummaryPdf(){
+  const {jsPDF}=window.jspdf,doc=new jsPDF({unit:'mm',format:'a4',compress:true}),W=210,H=297,C=compute(UI.asOn),t=C.tot,L=bucketLabels();
+  [['Opening OS',t.open],['Sales',t.sales],['Collection',t.coll],['Closing Outstanding',t.net],['Overdue',t.overdue],['Advance / Credit',t.adv]].forEach((x,i)=>{const bx=14+(i%3)*61,by=32+Math.floor(i/3)*22;
+    doc.setFillColor(228,243,239);doc.roundedRect(bx,by,58,18,2,2,'F');doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(90);doc.text(x[0].toUpperCase(),bx+4,by+6);
+    doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(11,107,92);doc.text(fmt0(x[1]),bx+4,by+14)});
+  let y=82;const sec=x=>{if(y>H-50){doc.addPage();y=34}doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(30);doc.text(x,14,y);y+=3};
+  const tbl=(cols,rows)=>{pdfTable(doc,{cols},rows,y,{fs:8});y=doc.lastAutoTable.finalY+9};
+  const nn=(t,g)=>({t,get:g,type:'n',tot:true});
+  sec('Top 10 debtors');tbl([{t:'Party',get:r=>r.name},nn('Net Outstanding',r=>r.net),nn('Overdue',r=>r.overdue)],osRows().filter(r=>r.net>EPS).sort((a,b)=>b.net-a.net).slice(0,10));
+  sec('Outstanding by age');tbl([{t:'Bucket',get:r=>r.l},nn('Outstanding',r=>r.v)],L.map((l,i)=>({l:l+' days',v:t.b[i]})));
+  const M={};DB.sales.forEach(x=>{if(x.date<=UI.asOn){const m=x.date.slice(0,7);(M[m]=M[m]||{m,s:0,c:0}).s+=x.value}});DB.coll.forEach(x=>{if(x.date<=UI.asOn&&recIncluded(x)){const m=x.date.slice(0,7);(M[m]=M[m]||{m,s:0,c:0}).c+=x.value}});
+  sec('Last 6 months');tbl([{t:'Month',get:r=>MON[+r.m.slice(5)-1]+' '+r.m.slice(0,4)},nn('Sales',r=>r.s),nn('Collection',r=>r.c)],Object.values(M).sort((a,b)=>a.m<b.m?-1:1).slice(-6));
+  const n=doc.getNumberOfPages();for(let i=1;i<=n;i++){doc.setPage(i);pdfHead(doc,'Management Summary','As on '+asOnLabel(),W)}
+  pdfFoot(doc);doc.save('Management_Summary_'+UI.asOn+'.pdf');lsSet('ea_sumlast',todayISO());toast('Summary PDF downloaded');if(UI.page==='dash')render()}
+function spark(a,c){if(!a||a.length<2)return '';const mx=Math.max(...a),mn=Math.min(...a),r=(mx-mn)||1,pts=a.map((v,i)=>[i*100/(a.length-1),24-20*(v-mn)/r]);
+  const ln=pts.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ');
+  return '<svg class="spk" viewBox="0 0 100 28" preserveAspectRatio="none"><polygon points="0,28 '+ln+' 100,28" fill="'+c+'" opacity=".14"/><polyline points="'+ln+'" fill="none" stroke="'+c+'" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/></svg>'}
+/* ===== events ===== */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act,d=el.dataset;
+  switch(a){
+    case 'nav':go(d.p);break;
+    case 'close':closeModal();break;
+    case 'sort':{const rep=REP[d.id],i=+d.i;if(rep.cols[i].sortOff)break;const st=UI.ts[d.id];if(st.sort===i)st.dir=-st.dir;else{st.sort=i;st.dir=rep.cols[i].type==='n'?-1:1}repView(d.id,rep);break}
+    case 'pg':{const st=UI.ts[d.id];st.page+=+d.d;repView(d.id,REP[d.id]);break}
+    case 'tab':UI.tab[d.pg]=d.t;render();break;
+    case 'xl':exportXlsx(d.id);break;
+    case 'pdf':exportPdf(d.id);break;
+    case 'ledger':go('ledger',{k:d.k});break;
+    case 'stmts':{const rows=REP.os._sorted||REP.os.rows;if(rows.length>400&&!confirm(rows.length+' parties will be printed (one statement each). This can take a minute. Continue?'))break;makeStatements(rows.map(r=>r.k),DB.settings.fyStart,UI.asOn,'Party_Statements_'+UI.asOn+'.pdf');break}
+    case 'stmt1':{const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4',compress:true});stmtParty(doc,d.k,UI.f.ledger.from||DB.settings.fyStart,UI.f.ledger.to||UI.asOn,true);pdfFoot(doc);doc.save('Statement_'+pname(d.k).replace(/\W+/g,'_').slice(0,30)+'_'+UI.asOn+'.pdf');break}
+    case 'addsale':saleForm();break;
+    case 'editsale':saleForm(+d.id);break;
+    case 'delsale':if(confirm('Delete this sales entry?')){DB.sales=DB.sales.filter(s=>s.id!==+d.id);bump();render()}break;
+    case 'addcoll':collForm();break;
+    case 'editcoll':collForm(+d.id);break;
+    case 'delcoll':if(confirm('Delete this collection entry?')){DB.coll=DB.coll.filter(s=>s.id!==+d.id);bump();render()}break;
+    case 'pickinv':{const i=$('#f_i');i.value=i.value?i.value+', '+d.inv:d.inv;break}
+    case 'addparty':partyForm();break;
+    case 'editparty':partyForm(d.k);break;
+    case 'mergeparty':mergeForm(d.k);break;
+    case 'delparty':{const k=d.k;if(DB.sales.some(s=>s.k===k)||DB.coll.some(c=>c.k===k)||DB.opening[k]){toast('Party has opening balance / transactions - merge it instead',true);break}if(confirm('Delete party '+pname(k)+'?')){delete DB.parties[k];dirtyParties();bump();render()}break}
+    case 'dups':dupsView();break;
+    case 'domerge':mergeParty(d.a,d.b);el.closest('tr').remove();toast('Merged');break;
+    case 'tpl':downloadTemplate(d.t);break;
+    case 'exdb':exportDB();break;
+    case 'exclose':exportClosing();break;
+    case 'exjson':exportJSON();break;
+    case 'chart':go(d.p,d.pr?JSON.parse(d.pr):undefined);break;
+    case 'sumpdf':exportSummaryPdf();break;
+    case 'rcpt':{const c=DB.coll.find(x=>x.id===+d.id);if(c)exportVouchers([c],'Receipt_'+(c.receipt||c.id)+'_'+pname(c.k).replace(/\W+/g,'_').slice(0,24)+'.pdf');break}
+    case 'vall':exportVouchers(REP.coll._sorted||REP.coll.rows,'Receipt_Vouchers_'+UI.asOn+'.pdf');break;
+    case 'calnav':{const f=UI.f.cal=UI.f.cal||{};let y=+(f.m||UI.asOn.slice(0,7)).slice(0,4),m=+(f.m||UI.asOn.slice(0,7)).slice(5);if(+d.d===0){f.m=UI.asOn.slice(0,7)}else{m+=+d.d;if(m<1){m=12;y--}if(m>12){m=1;y++}f.m=y+'-'+pad(m)}f.sel='';render();break}
+    case 'calday':{const f=UI.f.cal;f.sel=f.sel===d.d?'':d.d;render();break}
+    case 'grp':{UI.grpOpen[d.g]=!UI.grpOpen[d.g];renderNav();break}
+    case 'csv':exportCsv(d.id);break;
+    case 'copy':copyRep(d.id);break;
+    case 'print':window.print();break;
+    case 'wa':reminderText();break;
+    case 'exall':exportAllReports();break;
+    case 'saveset':saveSettings();break;
+    case 'rollover':rollover();break;
+    case 'reload':loadFromSheet(false);break;
+    case 'syncclick':{const nb=BAD.sales.concat(BAD.coll,BAD.opening);if(_state==='conflict')onConflict();else if(_state==='err')flush();else if(nb.length)alert('These data rows could not be read, so saving of that section is paused. Fix them at the source, then press the refresh button.\n\n'+nb.slice(0,40).join('\n')+(nb.length>40?'\n... and '+(nb.length-40)+' more':''));else loadFromSheet(false);break}
+    case 'wipe':if(confirm('ERASE ALL DATA (parties, balances, sales, collections)?\n\nA backup copy will be kept first.')&&confirm('Really erase everything?')){(async()=>{if(!(await archiveSheets()))return;const k={company:DB.company,settings:DB.settings};DB=newDB();DB.company=k.company;DB.settings=k.settings;BAD={sales:[],coll:[],opening:[]};dirtyParties();bump();go('dash')})()}break;
+    case 'theme':{const n=document.documentElement.dataset.theme==='dark'?'light':'dark';lsSet('ea_theme',n);DB.settings.theme=n;applyTheme();break}
+    case 'menu':$('#side').classList.toggle('on');break;
+  }
+});
+document.addEventListener('change',e=>{const el=e.target;
+  if(el.dataset.act==='sumfreq'){lsSet('ea_sumfreq',el.value);toast(el.value==='off'?'Summary reminder off':'Summary reminder: '+el.value);render();return}
+  if(el.dataset.act==='psize'){const st=UI.ts[el.dataset.id];st.size=+el.value;st.page=0;repView(el.dataset.id,REP[el.dataset.id])}});
+['dragover','drop'].forEach(e=>window.addEventListener(e,ev=>ev.preventDefault()));
+$('#mask').addEventListener('mousedown',e=>{if(e.target.id==='mask')closeModal()});
+
+
+/* ===== PIN lock ===== */
+(function(){
+  const PH=2901722982099467,hs=str=>{let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0)};
+  const L=$('#lock'),inp=$('#lpin'),msg=$('#lmsg'),box=$('.lbox');let fails=0,until=0,idle;
+  const lock=()=>{inp.value='';msg.classList.remove('bad');msg.textContent='Enter your PIN to continue';L.classList.remove('off');$('#side').classList.remove('on');setTimeout(()=>inp.focus(),50)};
+  const arm=()=>{clearTimeout(idle);idle=setTimeout(lock,10*60*1000)};
+  const go=()=>{if(Date.now()<until){msg.textContent='Too many attempts - wait '+Math.ceil((until-Date.now())/1000)+'s';return}
+    if(hs('emerald|'+inp.value.trim())===PH){fails=0;L.classList.add('off');inp.value='';arm()}
+    else{fails++;msg.textContent=fails>=5?'Locked for 30 seconds':'Wrong PIN - try again';msg.classList.add('bad');if(fails>=5){until=Date.now()+30000;fails=0}inp.value='';box.style.animation='none';void box.offsetWidth;box.style.animation='shk .4s';inp.focus()}};
+  $('#lgo').onclick=go;inp.addEventListener('keydown',e=>{if(e.key==='Enter')go()});
+  ['click','keydown','mousemove','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{if(L.classList.contains('off'))arm()},{passive:true}));
+  const clk=()=>{const d=new Date();$('#lclock').textContent=pad(d.getHours())+':'+pad(d.getMinutes());$('#ldate').textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})};clk();setInterval(clk,15000);
+  $('#lockBtn').onclick=lock;setTimeout(()=>inp.focus(),100);
+})();
+document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn');if(!b||b.disabled)return;const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height),x=document.createElement('span');x.className='rip';x.style.cssText='width:'+d+'px;height:'+d+'px;left:'+(e.clientX-r.left-d/2)+'px;top:'+(e.clientY-r.top-d/2)+'px';b.appendChild(x);setTimeout(()=>x.remove(),600)});
+/* ===== init ===== */
+(async function(){
+  const asOn=$('#asOn');asOn.value=UI.asOn;asOn.onchange=()=>{UI.asOn=asOn.value||todayISO();render()};
+  applyTheme();renderNav();
+  await loadFromSheet(false);
+})();
+</script>
+</body></html>
