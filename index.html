@@ -217,6 +217,27 @@ td{padding:8px 9px}tbody tr{transition:background .12s}
 #prog.go{animation:pr .8s ease-out}@keyframes pr{0%{transform:scaleX(0);opacity:1}70%{transform:scaleX(.9);opacity:1}100%{transform:scaleX(1);opacity:0}}
 .btn{position:relative;overflow:hidden}.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.45);transform:scale(0);animation:rp .6s ease-out;pointer-events:none}.btn.sec .rip{background:rgba(11,107,92,.25)}
 @keyframes rp{to{transform:scale(2.6);opacity:0}}
+
+/* ===== lock animations ===== */
+#lock .pt{position:absolute;bottom:-20px;border-radius:50%;background:rgba(255,255,255,.35);animation:rise linear infinite;pointer-events:none}
+@keyframes rise{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:.8}90%{opacity:.6}100%{transform:translateY(-110vh) translateX(40px);opacity:0}}
+.lic{position:relative}.lic:before,.lic:after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--acc2);opacity:0;animation:pulse 2.6s ease-out infinite}.lic:after{animation-delay:1.3s}
+@keyframes pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+.lic svg{animation:wig 4s ease-in-out infinite;transform-origin:50% 90%}@keyframes wig{0%,86%,100%{transform:rotate(0)}89%{transform:rotate(-10deg)}92%{transform:rotate(9deg)}95%{transform:rotate(-5deg)}}
+.lsh{transform-box:fill-box;transform-origin:100% 100%;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+#lock.ok .lsh{transform:translateY(-3px) rotate(-35deg)}#lock.ok .lic{background:linear-gradient(135deg,#34d399,#059669);animation:okp .5s}#lock.ok .lic svg{animation:none}
+@keyframes okp{50%{transform:scale(1.18)}}
+#lock.ok{animation:lout .55s .4s ease-in forwards}@keyframes lout{to{opacity:0;transform:scale(1.06)}}
+#lock.ok .lbox{animation:lbox .5s .1s ease-in forwards}@keyframes lbox{to{transform:translateY(-16px) scale(.96);opacity:.0}}
+#lock.ok .lsub{color:var(--ok);font-weight:700}
+#lock.err .lbox{box-shadow:0 0 0 3px rgba(180,35,24,.5),0 30px 80px rgba(0,0,0,.45)}
+#lpin:focus{outline:0;border-color:var(--acc2);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc2) 25%,transparent);animation:gl 1.8s ease-in-out infinite}@keyframes gl{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--acc2) 12%,transparent)}}
+#lgo{position:relative;overflow:hidden}#lgo:after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:shn 3.2s ease-in-out infinite}
+@keyframes shn{0%,55%{left:-60%}100%{left:130%}}
+.lbrand h1{background:linear-gradient(100deg,#fff 30%,#a7f3d0 48%,#fff 66%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:fup .7s .1s both,tsh 5s 1s linear infinite}
+@keyframes tsh{to{background-position:-250% 0}}
+.lclock em{font-style:normal;animation:blk 1s steps(1) infinite}@keyframes blk{50%{opacity:.25}}
+.lclock b{background:none}
 @media print{#side,#top,.bar,.pager,.acts{display:none}#app{display:block}}
 </style></head>
 <body>
@@ -229,7 +250,7 @@ td{padding:8px 9px}tbody tr{transition:background .12s}
 <div id="prog"></div><div id="mask"></div><div id="toast"></div>
 <div id="lock"><i class="bl b1"></i><i class="bl b2"></i><i class="bl b3"></i>
 <div class="lbrand"><h1>EMERALD<br>AGENCIES</h1><p>Outstanding &amp; Collection Accounts</p><div class="lclock"><b id="lclock">--:--</b><span id="ldate"></span></div></div>
-<div class="lside"><div class="lbox"><div class="lic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><circle cx="12" cy="16" r="1.2" fill="currentColor"/></svg></div><h2>Welcome back</h2><div class="lsub" id="lmsg">Enter your PIN to continue</div>
+<div class="lside"><div class="lbox"><div class="lic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path class="lsh" d="M8 11V8a4 4 0 0 1 8 0v3"/><circle cx="12" cy="16" r="1.2" fill="currentColor"/></svg></div><h2>Welcome back</h2><div class="lsub" id="lmsg">Enter your PIN to continue</div>
 <input type="password" id="lpin" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="••••">
 <button type="button" class="btn" id="lgo">Unlock <span>→</span></button><div class="lfoot">Protected workspace · auto-locks after 10 min idle</div></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
@@ -1020,20 +1041,26 @@ function inWords(n){n=Math.round(n);if(!n)return 'Zero';const o=['','One','Two',
 function voucherPage(doc,c,first){
   if(!first)doc.addPage();const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight(),party=pname(c.k);
   pdfHead(doc,'RECEIPT VOUCHER',null,W);
-  const bal=(()=>{const P=compute(c.date).P[c.k];return P?P.net:null})(),L=(x,y,t,b)=>{doc.setFont('helvetica',b?'bold':'normal');doc.setFontSize(b?11:10);doc.setTextColor(b?20:70);doc.text(t,x,y)};
-  doc.setDrawColor(210,220,216);doc.setLineWidth(.3);doc.roundedRect(14,32,W-28,H-64,3,3);
-  L(20,44,'Voucher / Receipt No.');L(78,44,c.receipt||('V-'+c.id),true);L(W-70,44,'Date');L(W-52,44,disp(c.date),true);
-  L(20,57,'Received with thanks from');L(20,65,'M/s '+party,true);
-  doc.setFillColor(228,243,239);doc.roundedRect(20,73,W-40,22,2,2,'F');doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(90);doc.text('AMOUNT RECEIVED',26,80);
-  doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(11,107,92);doc.text('Rs. '+fmt(c.value),26,90);
-  doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(60);doc.text('Rupees '+inWords(c.value)+' Only',W-26,90,{align:'right'});
-  let y=106;const row=(a,b)=>{if(!b)return;L(20,y,a);L(70,y,String(b),true);y+=8};
-  row('Mode of payment',c.type==='CHQ'?'Cheque':c.type);row('Cheque / UTR / Ref No.',c.refNo);row('Ref date',c.refDate?disp(c.refDate):'');row('Against invoice(s)',c.inv);
+  const bal=(()=>{const P=compute(c.date).P[c.k];return P?P.net:null})();
+  const T=(x,y,t,sz,b,col,o)=>{doc.setFont('helvetica',b?'bold':'normal');doc.setFontSize(sz);doc.setTextColor(col[0],col[1],col[2]);doc.text(t,x,y,o)};
+  const G=[110,120,116],K=[25,35,32];
+  doc.setDrawColor(210,220,216);doc.setLineWidth(.3);doc.roundedRect(14,31,W-28,H-45,3,3);
+  T(20,40,'VOUCHER / RECEIPT NO.',7.5,0,G);T(20,46,String(c.receipt||('V-'+c.id)),11,1,K);
+  T(W-20,40,'DATE',7.5,0,G,{align:'right'});T(W-20,46,disp(c.date),11,1,K,{align:'right'});
+  T(20,56,'RECEIVED WITH THANKS FROM',7.5,0,G);
+  const pl=doc.splitTextToSize('M/s '+party,W-48);T(20,62,pl[0],12.5,1,K);
+  doc.setFillColor(228,243,239);doc.roundedRect(20,67,W-40,22,2,2,'F');
+  T(26,74,'AMOUNT RECEIVED',7.5,0,G);T(26,84,'Rs. '+fmt(c.value),17,1,[11,107,92]);
+  const wd=doc.splitTextToSize('Rupees '+inWords(Math.floor(c.value+1e-9))+(Math.round((c.value%1)*100)?' and '+inWords(Math.round((c.value%1)*100))+' Paise':'')+' Only',78);doc.setFont('helvetica','italic');doc.setFontSize(8.5);doc.setTextColor(70,80,76);
+  wd.slice(0,3).forEach((ln,k)=>doc.text(ln,W-26,75+k*4.6,{align:'right'}));
+  let y=98;const row=(a,b)=>{if(!b)return;T(20,y,a,8.5,0,G);const ln=doc.splitTextToSize(String(b),70);T(64,y,ln,9.5,1,K);y+=Math.max(1,ln.length)*4.6+2.4};
+  row('Mode of payment',(c.type==='CHQ'?'Cheque':c.type)+(c.refNo?'   |   Ref: '+c.refNo:'')+(c.refDate?'  dt. '+disp(c.refDate):''));
+  row('Against invoice(s)',c.inv);
   if(c.type==='CHQ'&&c.status&&c.status!=='CLEARED')row('Cheque status',c.status+' (subject to realisation)');
-  if(bal!=null)row('Balance outstanding as on '+disp(c.date),fmt(bal)+(bal<-EPS?' Cr':' Dr'));
-  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(30);doc.text('For '+DB.company,W-20,H-52,{align:'right'});
-  doc.setDrawColor(90);doc.line(W-70,H-40,W-20,H-40);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(90);doc.text('Authorised Signatory',W-20,H-35,{align:'right'});
-  doc.setFontSize(7.5);doc.text('This is a computer generated receipt voucher.',20,H-35)}
+  if(bal!=null)row('Balance as on '+disp(c.date),fmt(bal)+(bal<-EPS?' Cr':' Dr'));
+  T(W-20,H-33,'For '+DB.company,9,1,K,{align:'right'});
+  doc.setDrawColor(90);doc.setLineWidth(.3);doc.line(W-70,H-24,W-20,H-24);T(W-20,H-19.5,'Authorised Signatory',8,0,[90,90,90],{align:'right'});
+  T(20,H-19.5,'This is a computer generated receipt voucher.',7,0,G)}
 function exportVouchers(list,name){if(!list.length)return toast('No receipts to print',true);if(list.length>200&&!confirm(list.length+' vouchers will be generated. Continue?'))return;
   const {jsPDF}=window.jspdf,doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a5',compress:true});
   list.forEach((c,i)=>voucherPage(doc,c,i===0));pdfFoot(doc);doc.save(name);toast(list.length+' voucher(s) downloaded')}
@@ -1366,14 +1393,15 @@ $('#mask').addEventListener('mousedown',e=>{if(e.target.id==='mask')closeModal()
 (function(){
   const PH=2901722982099467,hs=str=>{let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0)};
   const L=$('#lock'),inp=$('#lpin'),msg=$('#lmsg'),box=$('.lbox');let fails=0,until=0,idle;
-  const lock=()=>{inp.value='';msg.classList.remove('bad');msg.textContent='Enter your PIN to continue';L.classList.remove('off');$('#side').classList.remove('on');setTimeout(()=>inp.focus(),50)};
+  const lock=()=>{inp.value='';msg.classList.remove('bad');msg.textContent='Enter your PIN to continue';L.classList.remove('off','ok');$('#side').classList.remove('on');setTimeout(()=>inp.focus(),50)};
   const arm=()=>{clearTimeout(idle);idle=setTimeout(lock,10*60*1000)};
   const go=()=>{if(Date.now()<until){msg.textContent='Too many attempts - wait '+Math.ceil((until-Date.now())/1000)+'s';return}
-    if(hs('emerald|'+inp.value.trim())===PH){fails=0;L.classList.add('off');inp.value='';arm()}
-    else{fails++;msg.textContent=fails>=5?'Locked for 30 seconds':'Wrong PIN - try again';msg.classList.add('bad');if(fails>=5){until=Date.now()+30000;fails=0}inp.value='';box.style.animation='none';void box.offsetWidth;box.style.animation='shk .4s';inp.focus()}};
+    if(hs('emerald|'+inp.value.trim())===PH){fails=0;inp.value='';msg.classList.remove('bad');msg.textContent='Welcome!';L.classList.add('ok');setTimeout(()=>{L.classList.add('off');L.classList.remove('ok')},900);arm()}
+    else{fails++;msg.textContent=fails>=5?'Locked for 30 seconds':'Wrong PIN - try again';msg.classList.add('bad');L.classList.add('err');setTimeout(()=>L.classList.remove('err'),600);if(fails>=5){until=Date.now()+30000;fails=0}inp.value='';box.style.animation='none';void box.offsetWidth;box.style.animation='shk .4s';inp.focus()}};
   $('#lgo').onclick=go;inp.addEventListener('keydown',e=>{if(e.key==='Enter')go()});
   ['click','keydown','mousemove','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{if(L.classList.contains('off'))arm()},{passive:true}));
-  const clk=()=>{const d=new Date();$('#lclock').textContent=pad(d.getHours())+':'+pad(d.getMinutes());$('#ldate').textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})};clk();setInterval(clk,15000);
+  const clk=()=>{const d=new Date();$('#lclock').innerHTML=pad(d.getHours())+'<em>:</em>'+pad(d.getMinutes());$('#ldate').textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})};clk();setInterval(clk,15000);
+  for(let i=0;i<22;i++){const e=document.createElement('i');e.className='pt';const z=4+Math.random()*10;e.style.cssText='left:'+(Math.random()*100)+'%;width:'+z+'px;height:'+z+'px;animation-duration:'+(9+Math.random()*12)+'s;animation-delay:-'+(Math.random()*18)+'s';L.insertBefore(e,L.firstChild)}
   $('#lockBtn').onclick=lock;setTimeout(()=>inp.focus(),100);
 })();
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn');if(!b||b.disabled)return;const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height),x=document.createElement('span');x.className='rip';x.style.cssText='width:'+d+'px;height:'+d+'px;left:'+(e.clientX-r.left-d/2)+'px;top:'+(e.clientY-r.top-d/2)+'px';b.appendChild(x);setTimeout(()=>x.remove(),600)});
